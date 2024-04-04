@@ -1,0 +1,8 @@
+<DebugCube>
+    <Properties>
+        <Scale x='5' y='5' z='5'/>
+        <Rotation x='90' y='90' z='90' random='true'/>
+        <Translation x='0' y='0' z='0' random='true'/>
+    </Properties>
+    <GOC_BoundingSphere/>
+</DebugCube>

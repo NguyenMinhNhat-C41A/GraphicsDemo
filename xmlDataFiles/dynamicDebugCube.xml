@@ -1,0 +1,16 @@
+<DynamicDebugCube>
+    <Properties>
+        <Scale x='5' y='5' z='5' />
+        <Rotation x='90' y='90' z='90' />
+        <Translation x='50' y='0' z='50' random='true' />
+    </Properties>
+    <GOC_Effect>
+        <Emittor>
+            <EmissionMode mode='continuous' />
+            <Affector type='linearMove'/>
+            <Affector type='scale'/>
+        </Emittor>
+    </GOC_Effect>
+    <GOC_BoundingSphere />
+    
+</DynamicDebugCube>
