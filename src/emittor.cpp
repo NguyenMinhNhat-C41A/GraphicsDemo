@@ -39,13 +39,15 @@ void Emittor::Particle::activate()
 {
     this->age = 0.0f;
     this->transform->setTranslate(glm::vec3(0.0f));
+    this->transform->setScale(glm::vec3(1.0f));
     this->translationDirection = glm::vec3(0.0f);
 }
 
-void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newDir)
+void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir)
 {
     this->age = 0.0f;
     this->transform->setTranslate(newPos);
+    this->transform->setScale(newScale);
     this->translationDirection = newDir;
 }
 void Emittor::Particle::update(float p_dt)
@@ -363,8 +365,8 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
         for (int j = 0; j < 6; j++)
         {
             glm::vec3 newVPos = (currentActiveParticle->transform->getTranslate() +
-                                 s_ParticleVerticesTemplate[j].y * camRight +
-                                 s_ParticleVerticesTemplate[j].z * camUp);
+                                 s_ParticleVerticesTemplate[j].y * camRight * currentActiveParticle->transform->getScale().x +
+                                 s_ParticleVerticesTemplate[j].z * camUp * currentActiveParticle->transform->getScale().y);
 
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
@@ -406,7 +408,7 @@ void Emittor::activateParticle()
     return;
 }
 
-void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newDir)
+void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir)
 {
     Particle *particle = nullptr;
     if (this->m_DormantParticles->particlesCount == 0)
@@ -423,7 +425,7 @@ void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newDir)
     glm::vec3 glmEmittorPos = this->m_pCompFX->getGlobalTranslate();
     glm::vec3 newParticlePos = glmEmittorPos + newPos;
 
-    particle->activate(newParticlePos, newDir);
+    particle->activate(newParticlePos, newScale, newDir);
 }
 
 void Emittor::deactivateParticle()

@@ -17,17 +17,7 @@ EmissionModeContinuous::~EmissionModeContinuous()
 void EmissionModeContinuous::update(float p_dt)
 {
     this->m_pTimer += p_dt;
-    int spawnChance = RandomNumberGenerator::getRandomNumber(0, 4);
-    if (spawnChance <= 1)
-    {
-        int ParticlesToSpawn = RandomNumberGenerator::getRandomNumber(1, 2);
-
-        for (int i = 0; i < ParticlesToSpawn; i++)
-        {
-            // std::cout << "EMIMODECONT - EMIT:" << this->m_pTimer << std::endl;
-            this->emit();
-        }
-    }
+    this->emit();
 }
 
 //--------------------------------------------------------------------------------
@@ -38,15 +28,25 @@ void EmissionModeContinuous::update(float p_dt)
 
 void EmissionModeContinuous::emit()
 {
-    glm::vec3 newParticlePos = glm::vec3(
-        RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-        RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-        RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f);
+    int spawnChance = RandomNumberGenerator::getRandomNumber(0, 4);
+    if (spawnChance <= 1)
+    {
+        int ParticlesToSpawn = RandomNumberGenerator::getRandomNumber(1, 2);
 
-    glm::vec3 newDirection = glm::normalize(glm::vec3(
-        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
+        for (int i = 0; i < ParticlesToSpawn; i++)
+        {
+            // std::cout << "EMIMODECONT - EMIT:" << this->m_pTimer << std::endl;
+            glm::vec3 newParticlePos = glm::vec3(
+                RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f);
 
-    this->m_pEmittor->activateParticle(newParticlePos, newDirection);
+            glm::vec3 newDirection = glm::normalize(glm::vec3(
+                RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+                RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+                RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
+
+            this->m_pEmittor->activateParticle(newParticlePos, glm::vec3(1.0f), newDirection);
+        }
+    }
 }

@@ -34,7 +34,7 @@ public:
         ~Particle();
 
         void activate();
-        void activate(const glm::vec3 &newPos, const glm::vec3 &newDir);
+        void activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir);
 
         void update(float p_dt);
 
@@ -104,7 +104,7 @@ public:
     void addParticle();
 
     void activateParticle();
-    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newDir);
+    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir);
     void deactivateParticle();
     void deactivateParticle(Particle *p_pParticle);
 
