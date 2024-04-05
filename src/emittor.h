@@ -40,6 +40,9 @@ public:
 
         Particle *getNextParticle();
 
+        float getAge();
+        Transform* getTransform();
+        
         void scale(const glm::vec3 &p_vNewSc);
         void scaleLinear(const glm::vec3 &p_vNewSc);
         void translate(const glm::vec3 &p_vNewTr);
@@ -109,6 +112,7 @@ public:
 
     ParticlesList *getActiveParticles();
 
+    float getParticleLifespan();
     glm::vec3 getStartScale();
     glm::vec3 getEndScale();
     glm::vec3 getDeltaScale();

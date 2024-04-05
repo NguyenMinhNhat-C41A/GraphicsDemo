@@ -20,10 +20,10 @@ int Emittor::s_iEmittorCounter = 0;
 
 Emittor::Particle ::Particle()
 {
-    {
-        this->prevParticle = nullptr;
-        this->nextParticle = nullptr;
-    }
+    this->transform = new Transform();
+    this->age = 0.0f;
+    this->prevParticle = nullptr;
+    this->nextParticle = nullptr;
 }
 
 Emittor::Particle::~Particle()
@@ -58,6 +58,16 @@ void Emittor::Particle::update(float p_dt)
 Emittor::Particle *Emittor::Particle::getNextParticle()
 {
     return this->nextParticle;
+}
+
+float Emittor::Particle::getAge()
+{
+    return this->age;
+}
+
+Transform *Emittor::Particle::getTransform()
+{
+    return this->transform;
 }
 
 void Emittor::Particle::scale(const glm::vec3 &p_vNewSc)
@@ -512,6 +522,11 @@ void Emittor::deactivateParticle(Particle *p_pParticle)
 Emittor::ParticlesList *Emittor::getActiveParticles()
 {
     return this->m_ActiveParticles;
+}
+
+float Emittor::getParticleLifespan()
+{
+    return this->m_fParticleLifespan;
 }
 
 glm::vec3 Emittor::getStartScale()
