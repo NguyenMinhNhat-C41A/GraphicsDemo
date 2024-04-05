@@ -30,8 +30,8 @@ void AffectorScale::affect(float p_dt)
 {
     for (auto particle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); particle != nullptr; particle = particle->getNextParticle())
     {
-        particle->scaleLinear((this->m_pEmittor->getDeltaScale() / this->m_pEmittor->getParticleLifespan()) * p_dt);
+        particle->scaleLinear(this->m_pEmittor->getDeltaScale() * (p_dt / this->m_pEmittor->getParticleLifespan()));
     }
 
-    glm::vec3 firstParticleScale = this->m_pEmittor->getActiveParticles()->getFirstParticle()->getTransform()->getScale();
+    Emittor::Particle *firstParticle = this->m_pEmittor->getActiveParticles()->getFirstParticle();
 }

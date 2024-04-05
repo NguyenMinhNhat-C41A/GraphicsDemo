@@ -78,10 +78,12 @@ void Emittor::Particle::scale(const glm::vec3 &p_vNewSc)
 void Emittor::Particle::scaleLinear(const glm::vec3 &p_vNewSc)
 {
     glm::vec3 newScale = this->transform->getScale() + p_vNewSc;
-    if (newScale.x > 0 && newScale.y > 0 && newScale.z > 0)
-    {
-        this->transform->setScale(newScale);
-    }
+
+    newScale.x = glm::max(newScale.x, 0.0f);
+    newScale.y = glm::max(newScale.y, 0.0f);
+    newScale.z = glm::max(newScale.z, 0.0f);
+
+    this->transform->setScale(newScale);
 }
 
 void Emittor::Particle::translate(const glm::vec3 &p_vNewTr)
@@ -199,7 +201,7 @@ Emittor::Particle *Emittor::ParticlesList::removeParticle(Particle *p_pParticle)
             }
             else
             {
-                std::cout << "EMITTOR - REMOVE_ERROR:PARTICLE_NOT_FOUND" << std::endl;
+                std::cerr << "EMITTOR - REMOVE_ERROR:PARTICLE_NOT_FOUND" << std::endl;
                 return nullptr;
             }
         }
@@ -377,26 +379,34 @@ void Emittor::update(float p_dt)
     this->m_fTimer += p_dt;
     this->m_fTestTimer += p_dt;
 
-    Particle *currentActiveParticle = this->m_ActiveParticles->firstParticle;
-
     this->m_pEmissionMode->update(p_dt);
     for (auto affector : this->m_vAffectors)
     {
         affector->update(p_dt);
     }
 
-    while (currentActiveParticle != nullptr)
+    // for (auto currentActiveParticle = this->m_ActiveParticles->firstParticle; currentActiveParticle != nullptr; currentActiveParticle = currentActiveParticle->nextParticle)
+    // {
+    //     currentActiveParticle->update(p_dt);
+    //     if (currentActiveParticle->age >= this->m_fParticleLifespan)
+    //     {
+    //         std::cout << "EMITTOR - DEACTIVATE_PARTICLE" << std::endl;
+    //         this->deactivateParticle(currentActiveParticle);
+    //     }
+    // }
+
+    auto currentActiveParticle = this->m_ActiveParticles->firstParticle;
+
+    while (currentActiveParticle != nullptr && currentActiveParticle->getAge() >= this->m_fParticleLifespan)
+    {
+        currentActiveParticle = currentActiveParticle->nextParticle;
+        this->deactivateParticle();
+    }
+
+    for (auto currentActiveParticle = this->m_ActiveParticles->firstParticle; currentActiveParticle != nullptr; currentActiveParticle = currentActiveParticle->nextParticle)
     {
         currentActiveParticle->update(p_dt);
-        if (currentActiveParticle->age >= this->m_fParticleLifespan)
-        {
-            // std::cout << "EMITTOR - DEACTIVATE_PARTICLE" << std::endl;
-            this->deactivateParticle(currentActiveParticle);
-        }
-
-        currentActiveParticle = currentActiveParticle->nextParticle;
     }
-    currentActiveParticle = nullptr;
 }
 
 void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
