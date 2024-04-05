@@ -41,8 +41,8 @@ public:
         Particle *getNextParticle();
 
         float getAge();
-        Transform* getTransform();
-        
+        Transform *getTransform();
+
         void scale(const glm::vec3 &p_vNewSc);
         void scaleLinear(const glm::vec3 &p_vNewSc);
         void translate(const glm::vec3 &p_vNewTr);
@@ -51,10 +51,10 @@ public:
     private:
         float age = 0.0f;
 
+        glm::vec4 colour = glm::vec4(1.0f);
         glm::vec3 translationDirection = glm::vec3(0.0f);
 
         Transform *transform = new Transform();
-        glm::vec4 colour = glm::vec4(0.0f);
 
         Particle *prevParticle = nullptr;
         Particle *nextParticle = nullptr;
@@ -113,6 +113,7 @@ public:
     ParticlesList *getActiveParticles();
 
     float getParticleLifespan();
+    glm::vec3 getOffset();
     glm::vec3 getStartScale();
     glm::vec3 getEndScale();
     glm::vec3 getDeltaScale();
@@ -142,8 +143,9 @@ private:
     float m_fParticleLifespan = 1.0f;
 
     float m_fTimer = 0.0f;
-    float m_fTestTimer = 0.0f;
+    float m_fEmittorLifespan = 0.0f;
 
+    glm::vec3 m_vOffset = glm::vec3(1.0f);
     glm::vec3 m_vStartScale = glm::vec3(1.0f);
     glm::vec3 m_vEndScale = glm::vec3(1.0f);
     glm::vec3 m_vDeltaScale = glm::vec3(0.0f);

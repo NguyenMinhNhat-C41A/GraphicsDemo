@@ -268,8 +268,47 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         std::string propTag = pXMLPropertiesNode->Value();
 
         //-----------------------------------
+        // PROPERTIES
+        //-----------------------------------
+        if (propTag.compare("Properties") == 0)
+        {
+            tinyxml2::XMLNode *pXMLEmiSpecsNode = pXMLPropertiesNode->FirstChild();
+            while (pXMLEmiSpecsNode != nullptr)
+            {
+                //-----------------------------------
+                // OFFSET
+                //-----------------------------------
+
+                std::string emiSpecsTag = pXMLEmiSpecsNode->Value();
+
+                if (emiSpecsTag.compare("Offset") == 0)
+                {
+                    printf("EMITTOR - OFFSET\n");
+                    glm::vec3 offset = glm::vec3(0.0f);
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("x", &offset.x) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_OFFSET_X\n");
+                    }
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("y", &offset.y) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_OFFSET_Y\n");
+                    }
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("z", &offset.z) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_OFFSET_Z\n");
+                    }
+
+                    emittor->m_vOffset = offset;
+                }
+
+                pXMLEmiSpecsNode = pXMLEmiSpecsNode->NextSibling();
+            }
+        }
+
+        //-----------------------------------
         // PARTICLE
         //-----------------------------------
+
         if (propTag.compare("Particle") == 0)
         {
             float particleLifespan = 1.0f;
@@ -377,23 +416,12 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
 void Emittor::update(float p_dt)
 {
     this->m_fTimer += p_dt;
-    this->m_fTestTimer += p_dt;
 
     this->m_pEmissionMode->update(p_dt);
     for (auto affector : this->m_vAffectors)
     {
         affector->update(p_dt);
     }
-
-    // for (auto currentActiveParticle = this->m_ActiveParticles->firstParticle; currentActiveParticle != nullptr; currentActiveParticle = currentActiveParticle->nextParticle)
-    // {
-    //     currentActiveParticle->update(p_dt);
-    //     if (currentActiveParticle->age >= this->m_fParticleLifespan)
-    //     {
-    //         std::cout << "EMITTOR - DEACTIVATE_PARTICLE" << std::endl;
-    //         this->deactivateParticle(currentActiveParticle);
-    //     }
-    // }
 
     auto currentActiveParticle = this->m_ActiveParticles->firstParticle;
 
@@ -492,8 +520,8 @@ void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScal
         this->m_ActiveParticles->pushParticle(particle);
     }
 
-    glm::vec3 glmEmittorPos = this->m_pCompFX->getGlobalTranslate();
-    glm::vec3 newParticlePos = glmEmittorPos + newPos;
+    glm::vec3 emittorPos = this->m_pCompFX->getGlobalTranslate();
+    glm::vec3 newParticlePos = emittorPos + newPos;
 
     particle->activate(newParticlePos, newScale, newDir);
 }
@@ -539,6 +567,11 @@ float Emittor::getParticleLifespan()
     return this->m_fParticleLifespan;
 }
 
+glm::vec3 Emittor::getOffset()
+{
+    return this->m_vOffset;
+}
+
 glm::vec3 Emittor::getStartScale()
 {
     return this->m_vStartScale;
@@ -568,8 +601,12 @@ Emittor::Emittor(ComponentEffect *compFX)
 
     this->m_iNumParticles = 0;
     this->m_iNumParticlesCap = 512;
-
     this->m_fTimer = 0.0f;
+
+    this->m_vOffset = glm::vec3(1.0f);
+    this->m_vStartScale = glm::vec3(1.0f);
+    this->m_vEndScale = glm::vec3(1.0f);
+    this->m_vDeltaScale = glm::vec3(0.0f);
 
     if (!this->m_pProgram)
     {
