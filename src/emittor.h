@@ -110,6 +110,10 @@ public:
 
     ParticlesList *getActiveParticles();
 
+    glm::vec3 getStartScale();
+    glm::vec3 getEndScale();
+    glm::vec3 getDeltaScale();
+
 private:
     //--------------------------------------------------------------------------------
     //
@@ -135,6 +139,10 @@ private:
 
     float m_fTimer = 0.0f;
     float m_fTestTimer = 0.0f;
+
+    glm::vec3 m_vStartScale = glm::vec3(1.0f);
+    glm::vec3 m_vEndScale = glm::vec3(1.0f);
+    glm::vec3 m_vDeltaScale = glm::vec3(0.0f);
 
     ParticlesList *m_DormantParticles = nullptr;
     ParticlesList *m_ActiveParticles = nullptr;

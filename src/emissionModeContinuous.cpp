@@ -46,7 +46,7 @@ void EmissionModeContinuous::emit()
                 RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
                 RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
 
-            this->m_pEmittor->activateParticle(newParticlePos, glm::vec3(1.0f), newDirection);
+            this->m_pEmittor->activateParticle(newParticlePos, this->m_pEmittor->getStartScale(), newDirection);
         }
     }
 }

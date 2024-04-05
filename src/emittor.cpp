@@ -286,6 +286,43 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             else if (aff.compare("scale") == 0)
             {
                 emittor->m_vAffectors.push_back(new AffectorScale(emittor));
+                glm::vec3 startScale, endScale = glm::vec3(1.0f);
+
+                // START SCALE
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startX", &startScale.x) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_START_SCALE_X\n");
+                }
+
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startY", &startScale.y) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_START_SCALE_Y\n");
+                }
+
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startZ", &startScale.z) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_START_SCALE_Z\n");
+                }
+
+                // END SCALE
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endX", &endScale.x) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_END_SCALE_X\n");
+                }
+
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endY", &endScale.y) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_END_SCALE_Y\n");
+                }
+
+                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endZ", &endScale.z) != tinyxml2::XML_SUCCESS)
+                {
+                    printf("EMITTOR - DEFAULT_END_SCALE_Z\n");
+                }
+
+                emittor->m_vStartScale = startScale;
+                emittor->m_vEndScale = endScale;
+                emittor->m_vDeltaScale = endScale - startScale;
             }
         }
 
@@ -343,7 +380,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
     m_pProgram->SetUniform("view", p_mProj * p_mView);
     m_pProgram->SetUniform("world", glm::mat4(1.0f));
-    m_pProgram->SetUniform("colour", glm::vec4(0.0f, 178.0f, 50.0f, 1.0f));
+    m_pProgram->SetUniform("colour", glm::vec4(0.0f, 144.0f, 48.0f, 1.0f));
     m_pProgram->Bind();
     m_pDecl->Bind();
 
@@ -462,6 +499,21 @@ void Emittor::deactivateParticle(Particle *p_pParticle)
 Emittor::ParticlesList *Emittor::getActiveParticles()
 {
     return this->m_ActiveParticles;
+}
+
+glm::vec3 Emittor::getStartScale()
+{
+    return this->m_vStartScale;
+}
+
+glm::vec3 Emittor::getEndScale()
+{
+    return this->m_vEndScale;
+}
+
+glm::vec3 Emittor::getDeltaScale()
+{
+    return this->m_vDeltaScale;
 }
 
 //--------------------------------------------------------------------------------
