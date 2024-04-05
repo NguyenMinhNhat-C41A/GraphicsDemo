@@ -3,7 +3,7 @@
 
 #include "affector.h"
 class Emittor;
-class AffectorScale : public Affector
+class AffectorFade : public Affector
 {
 public:
     //--------------------------------------------------------------------------------
@@ -12,8 +12,8 @@ public:
     //
     //--------------------------------------------------------------------------------
 
-    AffectorScale(Emittor *p_pEmittor);
-    ~AffectorScale();
+    AffectorFade(Emittor *p_pEmittor);
+    ~AffectorFade();
     virtual void update(float p_dt) override;
 
 private:
@@ -24,6 +24,4 @@ private:
     //--------------------------------------------------------------------------------
 
     virtual void affect(float p_dt) override;
-    glm::vec3 startScale = glm::vec3(0.0f);
-    glm::vec3 endScale = glm::vec3(0.0f);
 };

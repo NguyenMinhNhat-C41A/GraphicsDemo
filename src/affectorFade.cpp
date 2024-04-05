@@ -1,4 +1,4 @@
-#include "affectorScale.h"
+#include "affectorFade.h"
 
 //--------------------------------------------------------------------------------
 //
@@ -6,15 +6,15 @@
 //
 //--------------------------------------------------------------------------------
 
-AffectorScale::AffectorScale(Emittor *p_pEmittor) : Affector(p_pEmittor)
+AffectorFade::AffectorFade(Emittor *p_pEmittor) : Affector(p_pEmittor)
 {
 }
 
-AffectorScale::~AffectorScale()
+AffectorFade::~AffectorFade()
 {
 }
 
-void AffectorScale::update(float p_dt)
+void AffectorFade::update(float p_dt)
 {
     this->m_pTimer += p_dt;
     this->affect(p_dt);
@@ -26,11 +26,10 @@ void AffectorScale::update(float p_dt)
 //
 //--------------------------------------------------------------------------------
 
-void AffectorScale::affect(float p_dt)
+void AffectorFade::affect(float p_dt)
 {
 
     for (auto particle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); particle != nullptr; particle = particle->getNextParticle())
     {
-        particle->scaleLinear(glm::vec3(p_dt / 2.0f));
     }
 }
