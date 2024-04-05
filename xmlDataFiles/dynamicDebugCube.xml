@@ -6,7 +6,7 @@
     </Properties>
     <GOC_Effect>
         <Emittor>
-            <Particle lifespan='5.0f' />
+            <Particle lifespan='2.0f' />
             <EmissionMode mode='continuous' />
             <Affector type='linearMove' />
             <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='2.0f' endY='2.0f' endZ='2.0f'/>
