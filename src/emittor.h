@@ -46,7 +46,6 @@ public:
         void translateOnDirection(float p_fDist);
 
     private:
-        float lifespan = 2.0f;
         float age = 0.0f;
 
         glm::vec3 translationDirection = glm::vec3(0.0f);
@@ -136,6 +135,7 @@ private:
 
     int m_iNumParticles = 0;
     int m_iNumParticlesCap = 50;
+    float m_fParticleLifespan = 1.0f;
 
     float m_fTimer = 0.0f;
     float m_fTestTimer = 0.0f;

@@ -256,10 +256,23 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         std::string propTag = pXMLPropertiesNode->Value();
 
         //-----------------------------------
+        // PARTICLE
+        //-----------------------------------
+        if (propTag.compare("Particle") == 0)
+        {
+            float particleLifespan = 1.0f;
+
+            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("lifespan", &particleLifespan) != tinyxml2::XML_SUCCESS)
+            {
+                printf("EMITTOR - ERROR:DATA_NOT_FOUND:LIFESPAN\n");
+            }
+            emittor->m_fParticleLifespan = particleLifespan;
+        }
+        //-----------------------------------
         // EMISSION MODE
         //-----------------------------------
 
-        if (propTag.compare("EmissionMode") == 0)
+        else if (propTag.compare("EmissionMode") == 0)
         {
             if (emissionMode == nullptr)
             {
@@ -276,7 +289,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         // AFFECTOR
         //-----------------------------------
 
-        if (propTag.compare("Affector") == 0)
+        else if (propTag.compare("Affector") == 0)
         {
             aff = pXMLPropertiesNode->ToElement()->Attribute("type");
             if (aff.compare("linearMove") == 0)
@@ -365,7 +378,7 @@ void Emittor::update(float p_dt)
     while (currentActiveParticle != nullptr)
     {
         currentActiveParticle->update(p_dt);
-        if (currentActiveParticle->age >= currentActiveParticle->lifespan)
+        if (currentActiveParticle->age >= this->m_fParticleLifespan)
         {
             // std::cout << "EMITTOR - DEACTIVATE_PARTICLE" << std::endl;
             this->deactivateParticle(currentActiveParticle);
