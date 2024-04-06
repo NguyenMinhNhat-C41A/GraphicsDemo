@@ -113,6 +113,9 @@ public:
     ParticlesList *getActiveParticles();
 
     float getParticleLifespan();
+
+    void setAllParticlesToDefaultColour();
+
     glm::vec3 getOffset();
     glm::vec3 getStartScale();
     glm::vec3 getEndScale();
@@ -146,7 +149,7 @@ private:
     float m_fEmittorLifespan = 0.0f;
 
     glm::vec3 m_vOffset = glm::vec3(1.0f);
-    glm::vec4 m_vDefaultColours = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+    glm::vec4 m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
 
     glm::vec3 m_vStartScale = glm::vec3(1.0f);
     glm::vec3 m_vEndScale = glm::vec3(1.0f);

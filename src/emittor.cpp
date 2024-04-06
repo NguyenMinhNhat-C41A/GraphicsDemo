@@ -275,15 +275,14 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             tinyxml2::XMLNode *pXMLEmiSpecsNode = pXMLPropertiesNode->FirstChild();
             while (pXMLEmiSpecsNode != nullptr)
             {
+                std::string emiSpecsTag = pXMLEmiSpecsNode->Value();
+
                 //-----------------------------------
                 // OFFSET
                 //-----------------------------------
 
-                std::string emiSpecsTag = pXMLEmiSpecsNode->Value();
-
                 if (emiSpecsTag.compare("Offset") == 0)
                 {
-                    printf("EMITTOR - OFFSET\n");
                     glm::vec3 offset = glm::vec3(0.0f);
                     if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("x", &offset.x) != tinyxml2::XML_SUCCESS)
                     {
@@ -297,10 +296,41 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                     {
                         printf("EMITTOR - DEFAULT_OFFSET_Z\n");
                     }
-
                     emittor->m_vOffset = offset;
                 }
 
+                //-----------------------------------
+                // DEFAULT COLOUR
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("DefaultColour") == 0)
+                {
+                    glm::vec4 defaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("r", &defaultColour.r) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_R\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("g", &defaultColour.g) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_G\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("b", &defaultColour.b) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_B\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("a", &defaultColour.a) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_A\n");
+                    }
+
+                    emittor->m_vDefaultColour = defaultColour;
+
+                    emittor->setAllParticlesToDefaultColour();
+                }
                 pXMLEmiSpecsNode = pXMLEmiSpecsNode->NextSibling();
             }
         }
@@ -482,7 +512,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 void Emittor::addParticle()
 {
     Particle *newParticle = new Particle();
-    newParticle->colour = m_vDefaultColours;
+    newParticle->colour = m_vDefaultColour;
     this->m_DormantParticles->pushParticle(newParticle);
 }
 
@@ -567,6 +597,20 @@ float Emittor::getParticleLifespan()
     return this->m_fParticleLifespan;
 }
 
+void Emittor::setAllParticlesToDefaultColour()
+{
+
+    for (auto dormantParticle = this->m_DormantParticles->firstParticle; dormantParticle != nullptr; dormantParticle = dormantParticle->nextParticle)
+    {
+        dormantParticle->colour = this->m_vDefaultColour;
+    }
+
+    for (auto activeParticle = this->m_ActiveParticles->firstParticle; activeParticle != nullptr; activeParticle = activeParticle->nextParticle)
+    {
+        activeParticle->colour = this->m_vDefaultColour;
+    }
+}
+
 glm::vec3 Emittor::getOffset()
 {
     return this->m_vOffset;
@@ -604,7 +648,7 @@ Emittor::Emittor(ComponentEffect *compFX)
     this->m_fTimer = 0.0f;
 
     this->m_vOffset = glm::vec3(1.0f);
-    this->m_vDefaultColours = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+    this->m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
 
     this->m_vStartScale = glm::vec3(1.0f);
     this->m_vEndScale = glm::vec3(1.0f);
