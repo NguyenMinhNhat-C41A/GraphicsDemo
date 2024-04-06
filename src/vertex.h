@@ -9,3 +9,8 @@ struct QuadVertex
 {
     GLfloat x, y, z;
 };
+
+struct QuadVertexColoured
+{
+    GLfloat x, y, z, r, g, b, a;
+};

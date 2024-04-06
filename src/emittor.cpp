@@ -1,13 +1,13 @@
 #include "emittor.h"
 
-static const QuadVertex s_ParticleVerticesTemplate[] = {
+static const QuadVertexColoured s_ParticleVerticesTemplate[] = {
 
-    {0.0f, 0.5f, 0.5f},
-    {0.0f, 0.5f, -0.5f},
-    {0.0f, -0.5f, -0.5f},
-    {0.0f, -0.5f, -0.5f},
-    {0.0f, -0.5f, 0.5f},
-    {0.0f, 0.5f, 0.5f},
+    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
 };
 
 int Emittor::s_iEmittorCounter = 0;
@@ -441,7 +441,6 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
     m_pProgram->SetUniform("view", p_mProj * p_mView);
     m_pProgram->SetUniform("world", glm::mat4(1.0f));
-    m_pProgram->SetUniform("colour", glm::vec4(0.0f, 144.0f, 48.0f, 1.0f));
     m_pProgram->Bind();
     m_pDecl->Bind();
 
@@ -450,10 +449,6 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
     glm::vec3 camUp = glm::vec3(p_mView[0][1], p_mView[1][1], p_mView[2][1]);
     // Positions
     glm::vec3 glmEmittorPos = this->m_pCompFX->getGlobalTranslate();
-    QuadVertex currentEmittorPosition;
-    currentEmittorPosition.x = glmEmittorPos.x;
-    currentEmittorPosition.y = glmEmittorPos.y;
-    currentEmittorPosition.z = glmEmittorPos.z;
 
     // Updating vertex array
     int i = 0;
@@ -465,10 +460,13 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             glm::vec3 newVPos = (currentActiveParticle->transform->getTranslate() +
                                  s_ParticleVerticesTemplate[j].y * camRight * currentActiveParticle->transform->getScale().x +
                                  s_ParticleVerticesTemplate[j].z * camUp * currentActiveParticle->transform->getScale().y);
-
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
             this->m_ParticleVertices[i + j].z = newVPos.z;
+            this->m_ParticleVertices[i + j].r = currentActiveParticle->colour.r;
+            this->m_ParticleVertices[i + j].g = currentActiveParticle->colour.g;
+            this->m_ParticleVertices[i + j].b = currentActiveParticle->colour.b;
+            this->m_ParticleVertices[i + j].a = currentActiveParticle->colour.a;
         }
         i += 6;
         if (i > this->m_ActiveParticles->particlesCount * 6)
@@ -476,14 +474,16 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             break;
         }
     }
-    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertex) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertexColoured) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
     // printf("EMITTOR - NUM_ACTIVE_PARTICLES:%d\n", this->m_ActiveParticles->particlesCount);
 }
 
 void Emittor::addParticle()
 {
-    this->m_DormantParticles->pushParticle(new Particle());
+    Particle *newParticle = new Particle();
+    newParticle->colour = m_vDefaultColours;
+    this->m_DormantParticles->pushParticle(newParticle);
 }
 
 void Emittor::activateParticle()
@@ -604,6 +604,8 @@ Emittor::Emittor(ComponentEffect *compFX)
     this->m_fTimer = 0.0f;
 
     this->m_vOffset = glm::vec3(1.0f);
+    this->m_vDefaultColours = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+
     this->m_vStartScale = glm::vec3(1.0f);
     this->m_vEndScale = glm::vec3(1.0f);
     this->m_vDeltaScale = glm::vec3(0.0f);
@@ -613,11 +615,12 @@ Emittor::Emittor(ComponentEffect *compFX)
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         this->m_pProgram = wolf::ProgramManager::CreateProgram("data/particle.vsh", "data/particle.fsh");
-        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertex) * 6, true);
+        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertexColoured) * 6, true);
 
         this->m_pDecl = new wolf::VertexDeclaration();
         this->m_pDecl->Begin();
         this->m_pDecl->AppendAttribute(wolf::AT_Position, 3, wolf::CT_Float);
+        this->m_pDecl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
         this->m_pDecl->SetVertexBuffer(this->m_pVB);
         this->m_pDecl->End();
     }

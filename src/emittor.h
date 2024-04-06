@@ -146,6 +146,8 @@ private:
     float m_fEmittorLifespan = 0.0f;
 
     glm::vec3 m_vOffset = glm::vec3(1.0f);
+    glm::vec4 m_vDefaultColours = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+
     glm::vec3 m_vStartScale = glm::vec3(1.0f);
     glm::vec3 m_vEndScale = glm::vec3(1.0f);
     glm::vec3 m_vDeltaScale = glm::vec3(0.0f);
@@ -157,7 +159,7 @@ private:
     wolf::VertexDeclaration *m_pDecl = nullptr;
     wolf::Program *m_pProgram = nullptr;
 
-    QuadVertex m_ParticleVertices[6144];
+    QuadVertexColoured m_ParticleVertices[7168];
 
     static int s_iEmittorCounter;
 };
