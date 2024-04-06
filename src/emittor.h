@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "../thirdparty/tinyxml2/tinyxml2.h"
-
+#include "../wolf/wolf.h"
 #include "vertex.h"
 #include "transform.h"
 #include "componentEffect.h"
@@ -10,6 +10,7 @@
 #include "affector.h"
 #include "affectorLinearMove.h"
 #include "affectorScale.h"
+
 class ComponentEffect;
 class EmissionMode;
 class Affector;
@@ -161,6 +162,8 @@ private:
     wolf::VertexBuffer *m_pVB = nullptr;
     wolf::VertexDeclaration *m_pDecl = nullptr;
     wolf::Program *m_pProgram = nullptr;
+
+    wolf::Texture *m_pParticleTexture = nullptr;
 
     QuadVertexColoured m_ParticleVertices[7168];
 

@@ -443,6 +443,11 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         emittor->m_vAffectors.push_back(new AffectorLinearMove(emittor));
     }
 
+    if (emittor->m_pParticleTexture == nullptr)
+    {
+        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("../data/textures/Red.png");
+    }
+
     return emittor;
 }
 
@@ -704,14 +709,13 @@ Emittor::~Emittor()
     delete this->m_ActiveParticles;
     this->m_ActiveParticles = nullptr;
 
+    wolf::TextureManager::DestroyTexture(this->m_pParticleTexture);
+
+    delete this->m_pDecl;
+    this->m_pDecl = nullptr;
+    wolf::ProgramManager::DestroyProgram(this->m_pProgram);
+    this->m_pProgram = nullptr;
+    wolf::BufferManager::DestroyBuffer(this->m_pVB);
+    this->m_pVB = nullptr;
     s_iEmittorCounter--;
-    if (s_iEmittorCounter == 0)
-    {
-        delete this->m_pDecl;
-        this->m_pDecl = nullptr;
-        wolf::ProgramManager::DestroyProgram(this->m_pProgram);
-        this->m_pProgram = nullptr;
-        wolf::BufferManager::DestroyBuffer(this->m_pVB);
-        this->m_pVB = nullptr;
-    }
 }
