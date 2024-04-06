@@ -331,24 +331,27 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
 
                     emittor->setAllParticlesToDefaultColour();
                 }
+
+                //-----------------------------------
+                // PARTICLE LIFESPAN
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("ParticleLifespan") == 0)
+                {
+                    float particleLifespan = 1.0f;
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("lifespan", &particleLifespan) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_LIFESPAN\n");
+                    }
+
+                    emittor->m_fParticleLifespan = particleLifespan;
+                }
+
                 pXMLEmiSpecsNode = pXMLEmiSpecsNode->NextSibling();
             }
         }
 
-        //-----------------------------------
-        // PARTICLE
-        //-----------------------------------
-
-        if (propTag.compare("Particle") == 0)
-        {
-            float particleLifespan = 1.0f;
-
-            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("lifespan", &particleLifespan) != tinyxml2::XML_SUCCESS)
-            {
-                printf("EMITTOR - ERROR:DATA_NOT_FOUND:LIFESPAN\n");
-            }
-            emittor->m_fParticleLifespan = particleLifespan;
-        }
         //-----------------------------------
         // EMISSION MODE
         //-----------------------------------
