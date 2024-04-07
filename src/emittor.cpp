@@ -1,13 +1,14 @@
 #include "emittor.h"
 
-static const QuadVertexColoured s_ParticleVerticesTemplate[] = {
+static const QuadVertexTextured gs_ParticleVerticesTemplate[] = {
 
-    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    {0.0f, 0.5f, -0.5f, 0.0f, 0.0f},  // Bottom Left
+    {0.0f, 0.5f, 0.5f, 1.0f, 0.0f},   // Bottom Right
+    {0.0f, -0.5f, -0.5f, 0.0f, 1.0f}, // Top Left
+    // Lower triangle
+    {0.0f, -0.5f, -0.5f, 0.0f, 1.0f}, // Top Left (Repeated for the second triangle)
+    {0.0f, 0.5f, 0.5f, 1.0f, 0.0f},   // Bottom Right (Repeated for the second triangle)
+    {0.0f, -0.5f, 0.5f, 1.0f, 1.0f}   // Top Right
 };
 
 int Emittor::s_iEmittorCounter = 0;
@@ -345,6 +346,10 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                     {
                         emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture(particleTexture);
                     }
+                    else
+                    {
+                        std::cerr << "EMITTOR - ERROR:TEXTURE_ALREADY_SET" << std::endl;
+                    }
                 }
 
                 //-----------------------------------
@@ -464,6 +469,10 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("data/textures/Red.png");
     }
 
+    emittor->m_pParticleTexture->SetFilterMode(wolf::Texture::FM_Nearest);
+
+    emittor->m_pParticleTexture->SetWrapMode(wolf::Texture::WM_Repeat, wolf::Texture::WM_Repeat);
+
     return emittor;
 }
 
@@ -513,15 +522,13 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
         for (int j = 0; j < 6; j++)
         {
             glm::vec3 newVPos = (currentActiveParticle->transform->getTranslate() +
-                                 s_ParticleVerticesTemplate[j].y * camRight * currentActiveParticle->transform->getScale().x +
-                                 s_ParticleVerticesTemplate[j].z * camUp * currentActiveParticle->transform->getScale().y);
+                                 gs_ParticleVerticesTemplate[j].y * camRight * currentActiveParticle->transform->getScale().x +
+                                 gs_ParticleVerticesTemplate[j].z * camUp * currentActiveParticle->transform->getScale().y);
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
             this->m_ParticleVertices[i + j].z = newVPos.z;
-            this->m_ParticleVertices[i + j].r = currentActiveParticle->colour.r;
-            this->m_ParticleVertices[i + j].g = currentActiveParticle->colour.g;
-            this->m_ParticleVertices[i + j].b = currentActiveParticle->colour.b;
-            this->m_ParticleVertices[i + j].a = currentActiveParticle->colour.a;
+            this->m_ParticleVertices[i + j].u = gs_ParticleVerticesTemplate[j].u;
+            this->m_ParticleVertices[i + j].v = gs_ParticleVerticesTemplate[j].v;
         }
         i += 6;
         if (i > this->m_ActiveParticles->particlesCount * 6)
@@ -529,7 +536,10 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             break;
         }
     }
-    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertexColoured) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertexTextured) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
+
+    this->m_pParticleTexture->Bind(0);
+
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
     // printf("EMITTOR - NUM_ACTIVE_PARTICLES:%d\n", this->m_ActiveParticles->particlesCount);
 }
@@ -684,12 +694,12 @@ Emittor::Emittor(ComponentEffect *compFX)
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         this->m_pProgram = wolf::ProgramManager::CreateProgram("data/particle.vsh", "data/particle.fsh");
-        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertexColoured) * 6, true);
+        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertexTextured) * 6, true);
 
         this->m_pDecl = new wolf::VertexDeclaration();
         this->m_pDecl->Begin();
         this->m_pDecl->AppendAttribute(wolf::AT_Position, 3, wolf::CT_Float);
-        this->m_pDecl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
+        this->m_pDecl->AppendAttribute(wolf::AT_TexCoord1, 2, wolf::CT_Float);
         this->m_pDecl->SetVertexBuffer(this->m_pVB);
         this->m_pDecl->End();
     }

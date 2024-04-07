@@ -14,3 +14,8 @@ struct QuadVertexColoured
 {
     GLfloat x, y, z, r, g, b, a;
 };
+
+struct QuadVertexTextured
+{
+    GLfloat x, y, z, u, v;
+};

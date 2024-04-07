@@ -165,7 +165,7 @@ private:
 
     wolf::Texture *m_pParticleTexture = nullptr;
 
-    QuadVertexColoured m_ParticleVertices[7168];
+    QuadVertexTextured m_ParticleVertices[7168];
 
     static int s_iEmittorCounter;
 };
