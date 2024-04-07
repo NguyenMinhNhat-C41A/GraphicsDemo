@@ -257,9 +257,7 @@ Emittor::Particle *Emittor::ParticlesList::removeParticle(Particle *p_pParticle)
 Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLNode)
 {
     Emittor *emittor = new Emittor(p_pCompFX);
-    EmissionMode *emissionMode = nullptr;
-    std::string emmo = "";
-    std::string aff = "";
+
     tinyxml2::XMLNode *pXMLPropertiesNode = p_pXMLNode->FirstChild();
 
     while (pXMLPropertiesNode != nullptr)
@@ -333,6 +331,23 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                 }
 
                 //-----------------------------------
+                // PARTICLE TEXTURE
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("ParticleTexture") == 0)
+                {
+                    const char *particleTexture = "";
+                    if (pXMLEmiSpecsNode->ToElement()->QueryStringAttribute("texture", &particleTexture) != tinyxml2::XML_SUCCESS)
+                    {
+                        std::cerr << "EMITTOR - TEXTURE_NOT_FOUND" << std::endl;
+                    }
+                    if (emittor->m_pParticleTexture == nullptr)
+                    {
+                        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture(particleTexture);
+                    }
+                }
+
+                //-----------------------------------
                 // PARTICLE LIFESPAN
                 //-----------------------------------
 
@@ -358,9 +373,10 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
 
         else if (propTag.compare("EmissionMode") == 0)
         {
+            EmissionMode *emissionMode = nullptr;
             if (emissionMode == nullptr)
             {
-                emmo = pXMLPropertiesNode->ToElement()->Attribute("mode");
+                std::string emmo = pXMLPropertiesNode->ToElement()->Attribute("mode");
                 if (emmo.compare("continuous") == 0)
                 {
                     emissionMode = new EmissionModeContinuous(emittor);
@@ -375,7 +391,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
 
         else if (propTag.compare("Affector") == 0)
         {
-            aff = pXMLPropertiesNode->ToElement()->Attribute("type");
+            std::string aff = pXMLPropertiesNode->ToElement()->Attribute("type");
             if (aff.compare("linearMove") == 0)
             {
                 emittor->m_vAffectors.push_back(new AffectorLinearMove(emittor));
@@ -429,11 +445,11 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
     //-----------------------------------
     // SETTING DEFAULTS
     //-----------------------------------
-    if (emissionMode == nullptr)
+    if (emittor->m_pEmissionMode == nullptr)
     {
 
         printf("EMITTOR - SET_DEFAULT_EMISSION_MODE\n");
-        emissionMode = new EmissionModeContinuous(emittor);
+        EmissionMode *emissionMode = new EmissionModeContinuous(emittor);
         emittor->m_pEmissionMode = emissionMode;
     }
 

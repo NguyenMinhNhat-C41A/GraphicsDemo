@@ -9,6 +9,7 @@
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <DefaultColour r='0.0f' g='144.0f' b='48.0f' a='255.0f'/>
+                <ParticleTexture texture='data/textures/Red.png'/>
                 <ParticleLifespan lifespan='5.0f'/>
             </Properties>
             <EmissionMode mode='continuous' />
