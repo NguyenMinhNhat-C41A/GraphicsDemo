@@ -504,11 +504,6 @@ void Emittor::update(float p_dt)
         }
         currentActiveParticle = nextParticle;
     }
-
-    for (auto currentActiveParticle = this->m_ActiveParticles->firstParticle; currentActiveParticle != nullptr; currentActiveParticle = currentActiveParticle->nextParticle)
-    {
-        currentActiveParticle->update(p_dt);
-    }
 }
 
 void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)

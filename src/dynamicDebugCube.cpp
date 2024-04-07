@@ -216,10 +216,10 @@ void DynamicDebugCube::update(float p_dt)
     DebugCube::update(p_dt);
     this->m_fCounter += p_dt;
 
-    // this->setTranslate(glm::vec3(
-    //     this->m_fOrbitRadius * glm::sin(this->m_fCounter * this->m_fOrbitSpeed),
-    //     yPos,
-    //     this->m_fOrbitRadius * glm::cos(this->m_fCounter * this->m_fOrbitSpeed)));
+    this->setTranslate(glm::vec3(
+        this->m_fOrbitRadius * glm::sin(this->m_fCounter * this->m_fOrbitSpeed),
+        yPos,
+        this->m_fOrbitRadius * glm::cos(this->m_fCounter * this->m_fOrbitSpeed)));
 
     this->setRotate(this->getRotate() + p_dt * this->m_fRotateSpeed);
 }
