@@ -3,10 +3,6 @@
 #include <glm/glm.hpp>
 #include "../wolf/wolf.h"
 #include "../samplefw/SampleRunner.h"
-#include "sampleSimpleTexture.h"
-#include "sampleTextureFromFile.h"
-#include "sampleMultiTex.h"
-#include "sampleMultiUVSets.h"
 
 #include "sampleNodeWork.h"
 
@@ -28,15 +24,15 @@ public:
 
     void update(float dt) override
     {
-        if (isKeyDown('p'))
-        {
-            m_lastDown = true;
-        }
-        else if (m_lastDown)
-        {
-            m_sampleRunner.nextSample();
-            m_lastDown = false;
-        }
+        // if (isKeyDown('p'))
+        // {
+        //     m_lastDown = true;
+        // }
+        // else if (m_lastDown)
+        // {
+        //     m_sampleRunner.nextSample();
+        //     m_lastDown = false;
+        // }
 
         m_sampleRunner.update(dt);
     }
