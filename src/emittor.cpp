@@ -445,7 +445,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
 
     if (emittor->m_pParticleTexture == nullptr)
     {
-        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("../data/textures/Red.png");
+        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("data/textures/Red.png");
     }
 
     return emittor;
@@ -479,6 +479,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
     m_pProgram->SetUniform("view", p_mProj * p_mView);
     m_pProgram->SetUniform("world", glm::mat4(1.0f));
+    m_pProgram->SetUniform("tex", 0);
     m_pProgram->Bind();
     m_pDecl->Bind();
 
