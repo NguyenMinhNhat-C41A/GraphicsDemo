@@ -12,10 +12,6 @@ public:
     Week2() : App("Week 4")
     {
         m_sampleRunner.addSample(new SampleNodeWork(this));
-        // m_sampleRunner.addSample(new SampleSimpleTexture(this));
-        // m_sampleRunner.addSample(new SampleTextureFromFile(this));
-        // m_sampleRunner.addSample(new SampleMultiTex(this));
-        // m_sampleRunner.addSample(new SampleMultiUVSets(this));
     }
 
     ~Week2()
