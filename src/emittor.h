@@ -52,7 +52,6 @@ public:
     private:
         float age = 0.0f;
 
-        glm::vec4 colour = glm::vec4(1.0f);
         glm::vec3 translationDirection = glm::vec3(0.0f);
 
         Transform *transform = new Transform();
@@ -115,8 +114,6 @@ public:
 
     float getParticleLifespan();
 
-    void setAllParticlesToDefaultColour();
-
     glm::vec3 getOffset();
     glm::vec3 getStartScale();
     glm::vec3 getEndScale();
@@ -150,7 +147,6 @@ private:
     float m_fEmittorLifespan = 0.0f;
 
     glm::vec3 m_vOffset = glm::vec3(1.0f);
-    glm::vec4 m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
 
     glm::vec3 m_vStartScale = glm::vec3(1.0f);
     glm::vec3 m_vEndScale = glm::vec3(1.0f);
