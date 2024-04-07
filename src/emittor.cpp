@@ -493,10 +493,16 @@ void Emittor::update(float p_dt)
 
     auto currentActiveParticle = this->m_ActiveParticles->firstParticle;
 
-    while (currentActiveParticle != nullptr && currentActiveParticle->getAge() >= currentActiveParticle->getLifespan())
+    while (currentActiveParticle != nullptr)
     {
-        currentActiveParticle = currentActiveParticle->nextParticle;
-        this->deactivateParticle();
+        currentActiveParticle->update(p_dt);
+
+        Particle *nextParticle = currentActiveParticle->getNextParticle();
+        if (currentActiveParticle->getAge() >= currentActiveParticle->getLifespan())
+        {
+            this->deactivateParticle(currentActiveParticle);
+        }
+        currentActiveParticle = nextParticle;
     }
 
     for (auto currentActiveParticle = this->m_ActiveParticles->firstParticle; currentActiveParticle != nullptr; currentActiveParticle = currentActiveParticle->nextParticle)
@@ -635,7 +641,6 @@ Emittor::ParticlesList *Emittor::getActiveParticles()
 
 float Emittor::getParticleBaseLifespan()
 {
-    std::cout << "EMITTOR - BLS:" << this->m_fParticleBaseLifespan << std::endl;
     return this->m_fParticleBaseLifespan;
 }
 

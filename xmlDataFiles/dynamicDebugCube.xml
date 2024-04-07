@@ -13,7 +13,7 @@
             </Properties>
             <EmissionMode mode='continuous' />
             <Affector type='linearMove' />
-            <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='5.0f' endY='5.0f' endZ='5.0f'/>
+            <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='7.0f' endY='7.0f' endZ='7.0f'/>
         </Emittor>
     </GOC_Effect>
     <GOC_BoundingSphere />
