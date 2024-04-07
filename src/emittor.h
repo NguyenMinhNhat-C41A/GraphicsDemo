@@ -35,13 +35,14 @@ public:
         ~Particle();
 
         void activate();
-        void activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir);
+        void activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan);
 
         void update(float p_dt);
 
         Particle *getNextParticle();
 
         float getAge();
+        float getLifespan();
         Transform *getTransform();
 
         void scale(const glm::vec3 &p_vNewSc);
@@ -51,7 +52,9 @@ public:
 
     private:
         float age = 0.0f;
+        float lifespan = 5.0f;
 
+        glm::vec4 colour = glm::vec4(1.0f);
         glm::vec3 translationDirection = glm::vec3(0.0f);
 
         Transform *transform = new Transform();
@@ -106,13 +109,15 @@ public:
     void addParticle();
 
     void activateParticle();
-    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir);
+    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan);
     void deactivateParticle();
     void deactivateParticle(Particle *p_pParticle);
 
     ParticlesList *getActiveParticles();
 
-    float getParticleLifespan();
+    float getParticleBaseLifespan();
+
+    void setAllParticlesToDefaultColour();
 
     glm::vec3 getOffset();
     glm::vec3 getStartScale();
@@ -141,12 +146,13 @@ private:
 
     int m_iNumParticles = 0;
     int m_iNumParticlesCap = 50;
-    float m_fParticleLifespan = 1.0f;
+    float m_fParticleBaseLifespan = 1.0f;
 
     float m_fTimer = 0.0f;
     float m_fEmittorLifespan = 0.0f;
 
     glm::vec3 m_vOffset = glm::vec3(1.0f);
+    glm::vec4 m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
 
     glm::vec3 m_vStartScale = glm::vec3(1.0f);
     glm::vec3 m_vEndScale = glm::vec3(1.0f);
@@ -161,7 +167,7 @@ private:
 
     wolf::Texture *m_pParticleTexture = nullptr;
 
-    QuadVertexTextured m_ParticleVertices[7168];
+    QuadVertexColouredTextured m_ParticleVertices[7168];
 
     static int s_iEmittorCounter;
 };

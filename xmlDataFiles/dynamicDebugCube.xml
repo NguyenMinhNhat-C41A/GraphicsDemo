@@ -9,7 +9,7 @@
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <ParticleTexture texture='data/textures/Mosaic.png'/>
-                <ParticleLifespan lifespan='5.0f'/>
+                <ParticleBaseLifespan time='5.0f'/>
             </Properties>
             <EmissionMode mode='continuous' />
             <Affector type='linearMove' />

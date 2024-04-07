@@ -49,7 +49,8 @@ void EmissionModeContinuous::emit()
             this->m_pEmittor->activateParticle(
                 newParticlePos + this->m_pEmittor->getOffset(),
                 this->m_pEmittor->getStartScale(),
-                newDirection);
+                newDirection,
+                this->m_pEmittor->getParticleBaseLifespan() + RandomNumberGenerator::getRandomNumber(0, 2));
         }
     }
 }

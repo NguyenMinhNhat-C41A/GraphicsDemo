@@ -1,14 +1,13 @@
 #include "emittor.h"
 
-static const QuadVertexTextured gs_ParticleVerticesTemplate[] = {
+static const QuadVertexColouredTextured gs_ParticleVerticesTemplate[] = {
 
-    {0.0f, 0.5f, -0.5f, 0.0f, 0.0f},  // Bottom Left
-    {0.0f, 0.5f, 0.5f, 1.0f, 0.0f},   // Bottom Right
-    {0.0f, -0.5f, -0.5f, 0.0f, 1.0f}, // Top Left
-    // Lower triangle
-    {0.0f, -0.5f, -0.5f, 0.0f, 1.0f}, // Top Left (Repeated for the second triangle)
-    {0.0f, 0.5f, 0.5f, 1.0f, 0.0f},   // Bottom Right (Repeated for the second triangle)
-    {0.0f, -0.5f, 0.5f, 1.0f, 1.0f}   // Top Right
+    {0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 0.0f, 0.0f},  // Bottom Left
+    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 1.0f, 0.0f},   // Bottom Right
+    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 0.0f, 1.0f}, // Top Left
+    {0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 0.0f, 1.0f}, // Top Left
+    {0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 1.0f, 0.0f},   // Bottom Right
+    {0.0f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 255.0f, 1.0f, 1.0f}   // Top Right
 };
 
 int Emittor::s_iEmittorCounter = 0;
@@ -44,9 +43,10 @@ void Emittor::Particle::activate()
     this->translationDirection = glm::vec3(0.0f);
 }
 
-void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir)
+void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan)
 {
     this->age = 0.0f;
+    this->lifespan = newLifespan;
     this->transform->setTranslate(newPos);
     this->transform->setScale(newScale);
     this->translationDirection = newDir;
@@ -64,6 +64,11 @@ Emittor::Particle *Emittor::Particle::getNextParticle()
 float Emittor::Particle::getAge()
 {
     return this->age;
+}
+
+float Emittor::Particle::getLifespan()
+{
+    return this->lifespan;
 }
 
 Transform *Emittor::Particle::getTransform()
@@ -299,6 +304,39 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                 }
 
                 //-----------------------------------
+                // DEFAULT COLOUR
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("DefaultColour") == 0)
+                {
+                    glm::vec4 defaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("r", &defaultColour.r) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_R\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("g", &defaultColour.g) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_G\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("b", &defaultColour.b) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_B\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("a", &defaultColour.a) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_DCOLOUR_A\n");
+                    }
+
+                    emittor->m_vDefaultColour = defaultColour;
+
+                    emittor->setAllParticlesToDefaultColour();
+                }
+
+                //-----------------------------------
                 // PARTICLE TEXTURE
                 //-----------------------------------
 
@@ -315,7 +353,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                     }
                     else
                     {
-                        std::cerr << "EMITTOR - ERROR:TEXTURE_ALREADY_SET" << std::endl;
+                        std::cerr << "EMITTOR - ERROR:CANNOT_RESET_TEXTURE_TO:" << particleTexture << std::endl;
                     }
                 }
 
@@ -323,16 +361,16 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                 // PARTICLE LIFESPAN
                 //-----------------------------------
 
-                else if (emiSpecsTag.compare("ParticleLifespan") == 0)
+                else if (emiSpecsTag.compare("ParticleBaseLifespan") == 0)
                 {
-                    float particleLifespan = 1.0f;
+                    float particleBaseLifespan = 1.0f;
 
-                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("lifespan", &particleLifespan) != tinyxml2::XML_SUCCESS)
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("time", &particleBaseLifespan) != tinyxml2::XML_SUCCESS)
                     {
                         printf("EMITTOR - DEFAULT_PARTICLE_LIFESPAN\n");
                     }
 
-                    emittor->m_fParticleLifespan = particleLifespan;
+                    emittor->m_fParticleBaseLifespan = particleBaseLifespan;
                 }
 
                 pXMLEmiSpecsNode = pXMLEmiSpecsNode->NextSibling();
@@ -455,7 +493,7 @@ void Emittor::update(float p_dt)
 
     auto currentActiveParticle = this->m_ActiveParticles->firstParticle;
 
-    while (currentActiveParticle != nullptr && currentActiveParticle->getAge() >= this->m_fParticleLifespan)
+    while (currentActiveParticle != nullptr && currentActiveParticle->getAge() >= currentActiveParticle->getLifespan())
     {
         currentActiveParticle = currentActiveParticle->nextParticle;
         this->deactivateParticle();
@@ -494,6 +532,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
             this->m_ParticleVertices[i + j].z = newVPos.z;
+            this->m_ParticleVertices[i + j].a = glm::max(0.0f, this->m_ParticleVertices[i + j].a * currentActiveParticle->age / currentActiveParticle->lifespan);
             this->m_ParticleVertices[i + j].u = gs_ParticleVerticesTemplate[j].u;
             this->m_ParticleVertices[i + j].v = gs_ParticleVerticesTemplate[j].v;
         }
@@ -503,7 +542,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             break;
         }
     }
-    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertexTextured) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertexColouredTextured) * this->m_ActiveParticles->particlesCount * 6, this->m_ParticleVertices, GL_DYNAMIC_DRAW);
 
     this->m_pParticleTexture->Bind(0);
 
@@ -514,6 +553,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 void Emittor::addParticle()
 {
     Particle *newParticle = new Particle();
+    newParticle->colour = m_vDefaultColour;
     this->m_DormantParticles->pushParticle(newParticle);
 }
 
@@ -537,7 +577,7 @@ void Emittor::activateParticle()
     return;
 }
 
-void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir)
+void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan)
 {
     Particle *particle = nullptr;
     if (this->m_DormantParticles->particlesCount == 0)
@@ -554,7 +594,7 @@ void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScal
     glm::vec3 emittorPos = this->m_pCompFX->getGlobalTranslate();
     glm::vec3 newParticlePos = emittorPos + newPos;
 
-    particle->activate(newParticlePos, newScale, newDir);
+    particle->activate(newParticlePos, newScale, newDir, newLifespan);
 }
 
 void Emittor::deactivateParticle()
@@ -593,9 +633,24 @@ Emittor::ParticlesList *Emittor::getActiveParticles()
     return this->m_ActiveParticles;
 }
 
-float Emittor::getParticleLifespan()
+float Emittor::getParticleBaseLifespan()
 {
-    return this->m_fParticleLifespan;
+    std::cout << "EMITTOR - BLS:" << this->m_fParticleBaseLifespan << std::endl;
+    return this->m_fParticleBaseLifespan;
+}
+
+void Emittor::setAllParticlesToDefaultColour()
+{
+
+    for (auto dormantParticle = this->m_DormantParticles->firstParticle; dormantParticle != nullptr; dormantParticle = dormantParticle->nextParticle)
+    {
+        dormantParticle->colour = this->m_vDefaultColour;
+    }
+
+    for (auto activeParticle = this->m_ActiveParticles->firstParticle; activeParticle != nullptr; activeParticle = activeParticle->nextParticle)
+    {
+        activeParticle->colour = this->m_vDefaultColour;
+    }
 }
 
 glm::vec3 Emittor::getOffset()
@@ -635,6 +690,7 @@ Emittor::Emittor(ComponentEffect *compFX)
     this->m_fTimer = 0.0f;
 
     this->m_vOffset = glm::vec3(1.0f);
+    this->m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
 
     this->m_vStartScale = glm::vec3(1.0f);
     this->m_vEndScale = glm::vec3(1.0f);
@@ -645,11 +701,12 @@ Emittor::Emittor(ComponentEffect *compFX)
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         this->m_pProgram = wolf::ProgramManager::CreateProgram("data/particle.vsh", "data/particle.fsh");
-        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertexTextured) * 6, true);
+        this->m_pVB = wolf::BufferManager::CreateVertexBuffer(this->m_ParticleVertices, sizeof(QuadVertexColouredTextured) * 6, true);
 
         this->m_pDecl = new wolf::VertexDeclaration();
         this->m_pDecl->Begin();
         this->m_pDecl->AppendAttribute(wolf::AT_Position, 3, wolf::CT_Float);
+        this->m_pDecl->AppendAttribute(wolf::AT_Color, 4, wolf::CT_Float);
         this->m_pDecl->AppendAttribute(wolf::AT_TexCoord1, 2, wolf::CT_Float);
         this->m_pDecl->SetVertexBuffer(this->m_pVB);
         this->m_pDecl->End();
