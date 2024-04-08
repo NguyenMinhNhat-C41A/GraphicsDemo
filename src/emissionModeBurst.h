@@ -4,9 +4,10 @@
 
 #include "emittor.h"
 #include "emissionMode.h"
+
 class Emittor;
 
-class EmissionModeContinuous : public EmissionMode
+class EmissionModeBurst : public EmissionMode
 {
 public:
     //--------------------------------------------------------------------------------
@@ -14,11 +15,9 @@ public:
     // PUBLIC METHODS
     //
     //--------------------------------------------------------------------------------
-
     static EmissionMode *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
-
-    EmissionModeContinuous(Emittor *p_pEmittor);
-    ~EmissionModeContinuous();
+    EmissionModeBurst(Emittor *p_pEmittor);
+    ~EmissionModeBurst();
 
     virtual void update(float p_dt) override;
 
@@ -30,4 +29,11 @@ private:
     //--------------------------------------------------------------------------------
 
     virtual void emit() override;
+
+    //--------------------------------------------------------------------------------
+    //
+    // PRIVATE VARIABLES
+    //
+    //--------------------------------------------------------------------------------
+    int m_fEmissionDelay = 2.0f;
 };

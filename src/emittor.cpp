@@ -71,6 +71,16 @@ float Emittor::Particle::getLifespan()
     return this->lifespan;
 }
 
+glm::vec4 Emittor::Particle::getColour()
+{
+    return this->colour;
+}
+
+void Emittor::Particle::setColour(const glm::vec4 &newColour)
+{
+    this->colour = newColour;
+}
+
 Transform *Emittor::Particle::getTransform()
 {
     return this->transform;
@@ -381,17 +391,11 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         // EMISSION MODE
         //-----------------------------------
 
-        else if (propTag.compare("EmissionMode") == 0)
+        else if (propTag.compare("EmissionModeContinuous") == 0)
         {
-            EmissionMode *emissionMode = nullptr;
-            if (emissionMode == nullptr)
+            if (emittor->m_pEmissionMode == nullptr)
             {
-                std::string emmo = pXMLPropertiesNode->ToElement()->Attribute("mode");
-                if (emmo.compare("continuous") == 0)
-                {
-                    emissionMode = new EmissionModeContinuous(emittor);
-                    emittor->m_pEmissionMode = emissionMode;
-                }
+                emittor->m_pEmissionMode = EmissionModeContinuous::Factory(emittor, pXMLPropertiesNode);
             }
         }
 
@@ -508,6 +512,7 @@ void Emittor::update(float p_dt)
 
 void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
+
     m_pProgram->SetUniform("view", p_mProj * p_mView);
     m_pProgram->SetUniform("world", glm::mat4(1.0f));
     m_pProgram->SetUniform("tex", 0);
@@ -533,7 +538,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
             this->m_ParticleVertices[i + j].z = newVPos.z;
-            this->m_ParticleVertices[i + j].a = glm::max(0.0f, this->m_ParticleVertices[i + j].a * currentActiveParticle->age / currentActiveParticle->lifespan);
+            this->m_ParticleVertices[i + j].a = currentActiveParticle->colour.a;
             this->m_ParticleVertices[i + j].u = gs_ParticleVerticesTemplate[j].u;
             this->m_ParticleVertices[i + j].v = gs_ParticleVerticesTemplate[j].v;
         }
@@ -547,7 +552,10 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 
     this->m_pParticleTexture->Bind(0);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
+    glDisable(GL_BLEND);
     // printf("EMITTOR - NUM_ACTIVE_PARTICLES:%d\n", this->m_ActiveParticles->particlesCount);
 }
 

@@ -6,6 +6,12 @@
 //
 //--------------------------------------------------------------------------------
 
+EmissionMode *EmissionModeContinuous::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode)
+{
+    EmissionModeContinuous *emmoCont = new EmissionModeContinuous(p_pEmittor);
+    return emmoCont;
+}
+
 EmissionModeContinuous::EmissionModeContinuous(Emittor *p_pEmittor) : EmissionMode(p_pEmittor)
 {
 }

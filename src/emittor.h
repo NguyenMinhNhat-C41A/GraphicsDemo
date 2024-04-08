@@ -6,6 +6,7 @@
 #include "transform.h"
 #include "componentEffect.h"
 #include "emissionMode.h"
+#include "emissionModeBurst.h"
 #include "emissionModeContinuous.h"
 #include "affector.h"
 #include "affectorLinearMove.h"
@@ -43,6 +44,10 @@ public:
 
         float getAge();
         float getLifespan();
+
+        glm::vec4 getColour();
+        void setColour(const glm::vec4 &newColour);
+
         Transform *getTransform();
 
         void scale(const glm::vec3 &p_vNewSc);

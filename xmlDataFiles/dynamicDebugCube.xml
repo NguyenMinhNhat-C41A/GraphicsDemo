@@ -1,9 +1,11 @@
 <DynamicDebugCube>
+   
     <Properties>
         <Scale x='5' y='5' z='5' />
         <Rotation x='90' y='90' z='90' />
         <Translation x='50' y='0' z='50' random='true' />
     </Properties>
+    
     <GOC_Effect>
         <Emittor>
             <Properties>
@@ -11,11 +13,16 @@
                 <ParticleTexture texture='data/textures/Mosaic.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
             </Properties>
-            <EmissionMode mode='continuous' />
+            
+            <EmissionModeContinuous>
+            </EmissionModeContinuous>
+
             <Affector type='linearMove' />
             <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='7.0f' endY='7.0f' endZ='7.0f'/>
+        
         </Emittor>
     </GOC_Effect>
+   
     <GOC_BoundingSphere />
     
 </DynamicDebugCube>

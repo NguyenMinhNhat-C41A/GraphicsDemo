@@ -29,7 +29,12 @@ void AffectorFade::update(float p_dt)
 void AffectorFade::affect(float p_dt)
 {
 
-    for (auto particle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); particle != nullptr; particle = particle->getNextParticle())
+    for (auto activeParticle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); activeParticle != nullptr; activeParticle = activeParticle->getNextParticle())
     {
+        glm::vec4 colour = activeParticle->getColour();
+
+        colour.a = colour.a * (activeParticle->getAge() / activeParticle->getLifespan());
+
+        activeParticle->setColour(colour);
     }
 }
