@@ -10,7 +10,7 @@
         <Emittor>
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
-                <ParticleTexture texture='data/textures/Mosaic.png'/>
+                <ParticleTexture texture='data/textures/Fire.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
             </Properties>
             

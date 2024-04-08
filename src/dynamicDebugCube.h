@@ -19,6 +19,9 @@ private:
     float m_fOrbitRadius = 0.0f;
     float m_fCounter = 0.0f;
     float yPos = 0.0f;
+    float m_fOrbitDir = 0.0f;
+    glm::vec3 m_vRotDir = glm::vec3(1.0f);
+    glm::vec3 m_vTrlOffset = glm::vec3(0.0f);
     glm::vec3 m_vRotOffset = glm::vec3(0.0f);
 
     float m_fOrbitSpeed = 0.25f;

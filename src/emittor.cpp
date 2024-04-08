@@ -341,9 +341,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                         printf("EMITTOR - DEFAULT_DCOLOUR_A\n");
                     }
 
-                    emittor->m_vDefaultColour = defaultColour;
-
-                    emittor->setAllParticlesToDefaultColour();
+                    emittor->setNewDefaultColour(defaultColour);
                 }
 
                 //-----------------------------------
@@ -543,9 +541,13 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
             glm::vec3 newVPos = (currentActiveParticle->transform->getTranslate() +
                                  gs_ParticleVerticesTemplate[j].y * camRight * currentActiveParticle->transform->getScale().x +
                                  gs_ParticleVerticesTemplate[j].z * camUp * currentActiveParticle->transform->getScale().y);
+
             this->m_ParticleVertices[i + j].x = newVPos.x;
             this->m_ParticleVertices[i + j].y = newVPos.y;
             this->m_ParticleVertices[i + j].z = newVPos.z;
+            this->m_ParticleVertices[i + j].r = currentActiveParticle->colour.r;
+            this->m_ParticleVertices[i + j].g = currentActiveParticle->colour.g;
+            this->m_ParticleVertices[i + j].b = currentActiveParticle->colour.b;
             this->m_ParticleVertices[i + j].a = currentActiveParticle->colour.a;
             this->m_ParticleVertices[i + j].u = gs_ParticleVerticesTemplate[j].u;
             this->m_ParticleVertices[i + j].v = gs_ParticleVerticesTemplate[j].v;
@@ -653,6 +655,11 @@ Emittor::ParticlesList *Emittor::getActiveParticles()
 float Emittor::getParticleBaseLifespan()
 {
     return this->m_fParticleBaseLifespan;
+}
+void Emittor::setNewDefaultColour(const glm::vec4 &p_vNewColour)
+{
+    this->m_vDefaultColour = p_vNewColour;
+    this->setAllParticlesToDefaultColour();
 }
 
 void Emittor::setAllParticlesToDefaultColour()

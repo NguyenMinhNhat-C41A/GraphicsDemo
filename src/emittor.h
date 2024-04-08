@@ -122,6 +122,7 @@ public:
 
     float getParticleBaseLifespan();
 
+    void setNewDefaultColour(const glm::vec4 &p_vNewColour);
     void setAllParticlesToDefaultColour();
 
     glm::vec3 getOffset();
