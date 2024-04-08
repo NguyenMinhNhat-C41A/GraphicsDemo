@@ -399,6 +399,14 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             }
         }
 
+        else if (propTag.compare("EmissionModeBurst") == 0)
+        {
+            if (emittor->m_pEmissionMode == nullptr)
+            {
+                emittor->m_pEmissionMode = EmissionModeBurst::Factory(emittor, pXMLPropertiesNode);
+            }
+        }
+
         //-----------------------------------
         // AFFECTOR
         //-----------------------------------

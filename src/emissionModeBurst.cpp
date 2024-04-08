@@ -17,7 +17,7 @@ EmissionModeBurst::EmissionModeBurst(Emittor *p_pEmittor) : EmissionMode(p_pEmit
 {
 }
 
-EmissionModeBurst::~EmissionModeBursts()
+EmissionModeBurst::~EmissionModeBurst()
 {
 }
 
@@ -46,19 +46,22 @@ void EmissionModeBurst::emit()
     {
         // std::cout << "EMIMODECONT - EMIT:" << this->m_pTimer << std::endl;
         glm::vec3 newParticlePos = glm::vec3(
-            RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-            RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-            RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f);
+                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f) +
+                                   this->m_pEmittor->getOffset();
 
         glm::vec3 newDirection = glm::normalize(glm::vec3(
             RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
             RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
             RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
 
+        float newLifespan = this->m_pEmittor->getParticleBaseLifespan() + static_cast<float>(RandomNumberGenerator::getRandomNumber(0, 128) / 64.0f);
+
         this->m_pEmittor->activateParticle(
-            newParticlePos + this->m_pEmittor->getOffset(),
+            newParticlePos,
             this->m_pEmittor->getStartScale(),
             newDirection,
-            this->m_pEmittor->getParticleBaseLifespan() + RandomNumberGenerator::getRandomNumber(0, 2));
+            newLifespan);
     }
 }

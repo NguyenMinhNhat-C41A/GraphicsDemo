@@ -14,8 +14,8 @@
                 <ParticleBaseLifespan time='5.0f'/>
             </Properties>
             
-            <EmissionModeContinuous>
-            </EmissionModeContinuous>
+            <EmissionModeBurst>
+            </EmissionModeBurst>
 
             <Affector type='linearMove' />
             <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='7.0f' endY='7.0f' endZ='7.0f'/>
