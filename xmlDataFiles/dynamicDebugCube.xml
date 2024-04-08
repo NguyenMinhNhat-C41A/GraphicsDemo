@@ -6,11 +6,13 @@
         <Translation x='50' y='0' z='50' random='true' />
     </Properties>
     
+    <!-- EFFECT 1 -->
+
     <GOC_Effect>
         <Emittor>
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
-                <ParticleTexture texture='data/textures/Mosaic.png'/>
+                <ParticleTexture texture='data/textures/Red.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
                 <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
                 <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
@@ -25,11 +27,32 @@
             </AffectorLinearMove>
 
             <AffectorScale>
-            </AffectorScale>
+            </AffectorScale>      
+        </Emittor>
+    </GOC_Effect>
 
-            <!-- <AffectorFade>
-            </AffectorFade> -->
+    <!-- EFFECT 2 -->
+
+    <GOC_Effect>
+        <Emittor>
+            <Properties>
+                <Offset x='0.0f' y='0.0f' z='0.0f' />
+                <ParticleTexture texture='data/textures/Mosaic.png'/>
+                <ParticleBaseLifespan time='5.0f'/>
+                <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
+                <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
+            </Properties>
             
+            <EmissionModeContinuous>
+            </EmissionModeContinuous>
+
+            <AffectorLinearMove>
+                <Direction x="0.0f" y= "16.0f" z="0.0f" />
+                <IsMoveOnParticleDirection isMOPD="false" />
+            </AffectorLinearMove>
+
+            <AffectorScale>
+            </AffectorScale>
         </Emittor>
     </GOC_Effect>
    

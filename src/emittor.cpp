@@ -528,6 +528,7 @@ void Emittor::update(float p_dt)
 
     while (currentActiveParticle != nullptr)
     {
+
         currentActiveParticle->update(p_dt);
 
         Particle *nextParticle = currentActiveParticle->getNextParticle();
@@ -541,7 +542,6 @@ void Emittor::update(float p_dt)
 
 void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
-
     m_pProgram->SetUniform("view", p_mProj * p_mView);
     m_pProgram->SetUniform("world", glm::mat4(1.0f));
     m_pProgram->SetUniform("tex", 0);
@@ -586,7 +586,6 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
     this->m_pParticleTexture->Bind(0);
 
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
-    // printf("EMITTOR - NUM_ACTIVE_PARTICLES:%d\n", this->m_ActiveParticles->particlesCount);
 }
 
 void Emittor::addParticle()

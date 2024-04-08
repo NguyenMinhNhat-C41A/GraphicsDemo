@@ -222,11 +222,9 @@ std::vector<Node *> Node::getImmediateChildren()
 
 void Node::addComponent(ComponentBase *p_pCompBase)
 {
-    if (this->m_ComponentMap.find(p_pCompBase->ComponentID()) == this->m_ComponentMap.end())
-    {
-        this->m_ComponentMap.insert(std::pair<std::string, ComponentBase *>(p_pCompBase->ComponentID(), p_pCompBase));
-        p_pCompBase->setComponentNode(this);
-    }
+
+    this->m_ComponentMap.insert(std::pair<std::string, ComponentBase *>(p_pCompBase->ComponentID(), p_pCompBase));
+    p_pCompBase->setComponentNode(this);
 }
 
 ComponentBase *Node::GetComponent(std::string p_pCompID)

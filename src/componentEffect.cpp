@@ -17,15 +17,6 @@ ComponentEffect ::~ComponentEffect()
     this->m_vEmittors.clear();
 }
 
-ComponentBase *ComponentEffect::createComponent(Node *p_pCompNode)
-{
-    ComponentEffect *pEffectComp = new ComponentEffect(p_pCompNode);
-    // default emittor
-    pEffectComp->addEmittor(new Emittor(pEffectComp));
-
-    return pEffectComp;
-}
-
 ComponentBase *ComponentEffect::Factory(Node *p_pCompNode, tinyxml2::XMLNode *p_pXMLNode)
 {
     ComponentEffect *pEffectComp = new ComponentEffect(p_pCompNode);

@@ -17,7 +17,6 @@ class ComponentEffect : public ComponentBase
     friend EffectManager;
 
 public:
-    static ComponentBase *createComponent(Node *p_pCompNode);
     static ComponentBase *Factory(Node *p_pCompNode, tinyxml2::XMLNode *p_pXMLNode);
 
     ~ComponentEffect();

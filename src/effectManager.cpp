@@ -38,6 +38,7 @@ void EffectManager::removeEffect(ComponentEffect *compEffect)
 
 void EffectManager::updateEffectsEmittors(float p_dt)
 {
+
     for (auto effect : this->m_vpEffects)
     {
         effect->updateEmittors(p_dt);

@@ -83,7 +83,9 @@ void SampleNodeWork::init()
 void SampleNodeWork::update(float dt)
 {
     Scene::Instance()->update(dt);
+
     EffectManager::Instance()->updateEffectsEmittors(dt);
+
     Scene::Instance()->getCamera()->update(dt);
     this->counter += dt;
 
