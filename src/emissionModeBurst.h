@@ -35,5 +35,5 @@ private:
     // PRIVATE VARIABLES
     //
     //--------------------------------------------------------------------------------
-    int m_fEmissionDelay = 2.0f;
+    float m_fEmissionDelay = 2.0f;
 };
