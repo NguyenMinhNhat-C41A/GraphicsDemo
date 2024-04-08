@@ -1,4 +1,7 @@
 #pragma once
+
+#include "../thirdparty/tinyxml2/tinyxml2.h"
+
 #include "emittor.h"
 #include "affector.h"
 
@@ -12,6 +15,8 @@ public:
     // PUBLIC METHODS
     //
     //--------------------------------------------------------------------------------
+
+    static Affector *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
 
     AffectorLinearMove(Emittor *p_pEmittor);
     ~AffectorLinearMove();

@@ -11,6 +11,7 @@
 #include "affector.h"
 #include "affectorLinearMove.h"
 #include "affectorScale.h"
+#include "affectorFade.h"
 
 class ComponentEffect;
 class EmissionMode;

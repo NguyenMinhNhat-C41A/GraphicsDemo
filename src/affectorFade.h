@@ -1,6 +1,8 @@
 #pragma once
-#include "emittor.h"
 
+#include "../thirdparty/tinyxml2/tinyxml2.h"
+
+#include "emittor.h"
 #include "affector.h"
 class Emittor;
 class AffectorFade : public Affector
@@ -11,6 +13,8 @@ public:
     // PUBLIC METHODS
     //
     //--------------------------------------------------------------------------------
+
+    static Affector *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
 
     AffectorFade(Emittor *p_pEmittor);
     ~AffectorFade();

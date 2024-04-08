@@ -26,6 +26,13 @@ void AffectorFade::update(float p_dt)
 //
 //--------------------------------------------------------------------------------
 
+Affector *AffectorFade::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode)
+{
+    AffectorFade *pAffFade = new AffectorFade(p_pEmittor);
+
+    return pAffFade;
+}
+
 void AffectorFade::affect(float p_dt)
 {
 
@@ -34,6 +41,7 @@ void AffectorFade::affect(float p_dt)
         glm::vec4 colour = activeParticle->getColour();
 
         colour.a = colour.a * (activeParticle->getAge() / activeParticle->getLifespan());
+        std::cout << "AFFFADE - ALPHA:" << colour.a << std::endl;
 
         activeParticle->setColour(colour);
     }

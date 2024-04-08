@@ -12,14 +12,20 @@
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <ParticleTexture texture='data/textures/Fire.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
+                <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
+                <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
             </Properties>
             
             <EmissionModeBurst>
             </EmissionModeBurst>
 
-            <Affector type='linearMove' />
-            <Affector type='scale' startX='1.0f' startY='1.0f' startZ='1.0f' endX='7.0f' endY='7.0f' endZ='7.0f'/>
-        
+            <AffectorLinearMove>
+            </AffectorLinearMove>
+
+            <AffectorScale>
+                
+            </AffectorScale>
+            
         </Emittor>
     </GOC_Effect>
    

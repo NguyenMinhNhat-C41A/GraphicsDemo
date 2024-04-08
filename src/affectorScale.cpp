@@ -6,6 +6,13 @@
 //
 //--------------------------------------------------------------------------------
 
+Affector *AffectorScale::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode)
+{
+    AffectorScale *pAffScale = new AffectorScale(p_pEmittor);
+
+    return pAffScale;
+}
+
 AffectorScale::AffectorScale(Emittor *p_pEmittor) : Affector(p_pEmittor)
 {
 }

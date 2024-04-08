@@ -25,6 +25,13 @@ void AffectorLinearMove::update(float p_dt)
 //
 //--------------------------------------------------------------------------------
 
+Affector *AffectorLinearMove::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode)
+{
+    AffectorLinearMove *pAffLiMo = new AffectorLinearMove(p_pEmittor);
+
+    return pAffLiMo;
+}
+
 void AffectorLinearMove::affect(float p_dt)
 {
     Emittor::ParticlesList *activeParticles = this->m_pEmittor->getActiveParticles();

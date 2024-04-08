@@ -381,6 +381,62 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                     emittor->m_fParticleBaseLifespan = particleBaseLifespan;
                 }
 
+                //-----------------------------------
+                // PARTICLE START SCALE
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("ParticleScaleStart") == 0)
+                {
+                    glm::vec3 particleScaleStart = glm::vec3(1.0f);
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("x", &particleScaleStart.x) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_SSCALE_X\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("y", &particleScaleStart.y) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_SSCALE_Y\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("z", &particleScaleStart.z) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_SSCALE_Z\n");
+                    }
+
+                    emittor->m_vStartScale = particleScaleStart;
+
+                    emittor->m_vDeltaScale = emittor->m_vEndScale - emittor->m_vStartScale;
+                }
+
+                //-----------------------------------
+                // PARTICLE START SCALE
+                //-----------------------------------
+
+                else if (emiSpecsTag.compare("ParticleScaleEnd") == 0)
+                {
+                    glm::vec3 particleScaleEnd = glm::vec3(1.0f);
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("x", &particleScaleEnd.x) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_ESCALE_X\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("y", &particleScaleEnd.y) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_ESCALE_Y\n");
+                    }
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("z", &particleScaleEnd.z) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_PARTICLE_ESCALE_Z\n");
+                    }
+
+                    emittor->m_vEndScale = particleScaleEnd;
+
+                    emittor->m_vDeltaScale = emittor->m_vEndScale - emittor->m_vStartScale;
+                }
+
                 pXMLEmiSpecsNode = pXMLEmiSpecsNode->NextSibling();
             }
         }
@@ -409,54 +465,14 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         // AFFECTOR
         //-----------------------------------
 
-        else if (propTag.compare("Affector") == 0)
+        else if (propTag.compare("AffectorLinearMove") == 0)
         {
-            std::string aff = pXMLPropertiesNode->ToElement()->Attribute("type");
-            if (aff.compare("linearMove") == 0)
-            {
-                emittor->m_vAffectors.push_back(new AffectorLinearMove(emittor));
-            }
-            else if (aff.compare("scale") == 0)
-            {
-                emittor->m_vAffectors.push_back(new AffectorScale(emittor));
-                glm::vec3 startScale, endScale = glm::vec3(1.0f);
+            emittor->m_vAffectors.push_back(AffectorLinearMove::Factory(emittor, pXMLPropertiesNode));
+        }
 
-                // START SCALE
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startX", &startScale.x) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_START_SCALE_X\n");
-                }
-
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startY", &startScale.y) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_START_SCALE_Y\n");
-                }
-
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("startZ", &startScale.z) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_START_SCALE_Z\n");
-                }
-
-                // END SCALE
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endX", &endScale.x) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_END_SCALE_X\n");
-                }
-
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endY", &endScale.y) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_END_SCALE_Y\n");
-                }
-
-                if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("endZ", &endScale.z) != tinyxml2::XML_SUCCESS)
-                {
-                    printf("EMITTOR - DEFAULT_END_SCALE_Z\n");
-                }
-
-                emittor->m_vStartScale = startScale;
-                emittor->m_vEndScale = endScale;
-                emittor->m_vDeltaScale = endScale - startScale;
-            }
+        else if (propTag.compare("AffectorScale") == 0)
+        {
+            emittor->m_vAffectors.push_back(AffectorScale::Factory(emittor, pXMLPropertiesNode));
         }
 
         pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
