@@ -10,7 +10,7 @@
         <Emittor>
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
-                <ParticleTexture texture='data/textures/Red.png'/>
+                <ParticleTexture texture='data/textures/Mosaic.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
                 <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
                 <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
@@ -20,13 +20,15 @@
             </EmissionModeContinuous>
 
             <AffectorLinearMove>
+                <Direction x="0.0f" y= "7.0f" z="0.0f" />
+                <IsMoveOnParticleDirection isMOPD="true" />
             </AffectorLinearMove>
 
             <AffectorScale>
             </AffectorScale>
 
-            <AffectorFade>
-            </AffectorFade>
+            <!-- <AffectorFade>
+            </AffectorFade> -->
             
         </Emittor>
     </GOC_Effect>
