@@ -43,12 +43,13 @@ void Emittor::Particle::activate()
     this->translationDirection = glm::vec3(0.0f);
 }
 
-void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan)
+void Emittor::Particle::activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, const glm::vec4 &newColour, float newLifespan)
 {
     this->age = 0.0f;
     this->lifespan = newLifespan;
     this->transform->setTranslate(newPos);
     this->transform->setScale(newScale);
+    this->colour = newColour;
     this->translationDirection = newDir;
 }
 void Emittor::Particle::update(float p_dt)
@@ -341,7 +342,8 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                         printf("EMITTOR - DEFAULT_DCOLOUR_A\n");
                     }
 
-                    emittor->setNewDefaultColour(defaultColour);
+                    emittor->setDefaultColour(defaultColour);
+                    emittor->setAllParticlesToDefaultColour();
                 }
 
                 //-----------------------------------
@@ -475,6 +477,11 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             emittor->m_vAffectors.push_back(AffectorScale::Factory(emittor, pXMLPropertiesNode));
         }
 
+        else if (propTag.compare("AffectorFade") == 0)
+        {
+            emittor->m_vAffectors.push_back(AffectorFade::Factory(emittor, pXMLPropertiesNode));
+        }
+
         pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
     }
 
@@ -578,10 +585,7 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 
     this->m_pParticleTexture->Bind(0);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
-    glDisable(GL_BLEND);
     // printf("EMITTOR - NUM_ACTIVE_PARTICLES:%d\n", this->m_ActiveParticles->particlesCount);
 }
 
@@ -612,7 +616,7 @@ void Emittor::activateParticle()
     return;
 }
 
-void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan)
+void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, const glm::vec4 &newColour, float newLifespan)
 {
     Particle *particle = nullptr;
     if (this->m_DormantParticles->particlesCount == 0)
@@ -629,7 +633,7 @@ void Emittor::activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScal
     glm::vec3 emittorPos = this->m_pCompFX->getGlobalTranslate();
     glm::vec3 newParticlePos = emittorPos + newPos;
 
-    particle->activate(newParticlePos, newScale, newDir, newLifespan);
+    particle->activate(newParticlePos, newScale, newDir, newColour, newLifespan);
 }
 
 void Emittor::deactivateParticle()
@@ -672,10 +676,14 @@ float Emittor::getParticleBaseLifespan()
 {
     return this->m_fParticleBaseLifespan;
 }
-void Emittor::setNewDefaultColour(const glm::vec4 &p_vNewColour)
+
+glm::vec4 Emittor::getDefaultColour()
+{
+    return this->m_vDefaultColour;
+}
+void Emittor::setDefaultColour(const glm::vec4 &p_vNewColour)
 {
     this->m_vDefaultColour = p_vNewColour;
-    this->setAllParticlesToDefaultColour();
 }
 
 void Emittor::setAllParticlesToDefaultColour()

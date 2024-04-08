@@ -209,8 +209,8 @@ DynamicDebugCube::DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNe
     this->yPos = p_vNewTr.y;
     this->m_vRotOffset = p_vNewRo;
     this->m_vTrlOffset = p_vNewTr;
-    this->m_fOrbitDir = RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f * 2.0f;
-    printf("DYDEBCUBE - ORBITDIR:%2f\n", this->m_fOrbitDir);
+    this->m_fOrbitDir = (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f;
+    // printf("DYDEBCUBE - ORBITDIR:%2f\n", this->m_fOrbitDir);
     this->m_vRotDir = glm::vec3(
         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,

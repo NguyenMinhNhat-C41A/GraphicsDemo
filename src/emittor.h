@@ -37,7 +37,7 @@ public:
         ~Particle();
 
         void activate();
-        void activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan);
+        void activate(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, const glm::vec4 &newColour, float newLifespan);
 
         void update(float p_dt);
 
@@ -115,7 +115,7 @@ public:
     void addParticle();
 
     void activateParticle();
-    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, float newLifespan);
+    void activateParticle(const glm::vec3 &newPos, const glm::vec3 &newScale, const glm::vec3 &newDir, const glm::vec4 &newColour, float newLifespan);
     void deactivateParticle();
     void deactivateParticle(Particle *p_pParticle);
 
@@ -123,7 +123,8 @@ public:
 
     float getParticleBaseLifespan();
 
-    void setNewDefaultColour(const glm::vec4 &p_vNewColour);
+    glm::vec4 getDefaultColour();
+    void setDefaultColour(const glm::vec4 &p_vNewColour);
     void setAllParticlesToDefaultColour();
 
     glm::vec3 getOffset();

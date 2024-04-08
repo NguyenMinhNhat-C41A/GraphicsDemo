@@ -65,16 +65,6 @@ void SampleNodeWork::init()
         BoundingSphere *boSphrChild01 = dynamic_cast<BoundingSphere *>(BoundingSphere::createComponent(childCube01));
         boSphrChild01->setDynamicUpdate(false);
         rootCube01->addChild(childCube01);
-        //
-        //         DebugCube *childCube02 = new DebugCube("ChildCube2-" + std::to_string(i),
-        //                                                glm::vec3(RandomNumberGenerator::getRandomNumber(1, 5) / 5.0f),
-        //                                                glm::vec3(RandomNumberGenerator::getRandomNumber(0, 359), RandomNumberGenerator::getRandomNumber(0, 359), RandomNumberGenerator::getRandomNumber(0, 359)),
-        //                                                glm::vec3(RandomNumberGenerator::getRandomNumber(-1, -4), RandomNumberGenerator::getRandomNumber(-1, -4), RandomNumberGenerator::getRandomNumber(-1, -4)));
-        //
-        //         BoundingSphere *boSphrChild02 = BoundingSphere::createComponent(childCube02);
-        //         boSphrChild02->setDynamicUpdate(false);
-        //         childCube02->addComponent(boSphrChild02);
-        //         childCube01->addChild(childCube02);
     }
 
     Node *ddbc = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
@@ -82,44 +72,6 @@ void SampleNodeWork::init()
 
     Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
     Scene::Instance()->addDynamicNode(ddbc2);
-    //_______________________________________________________________________________________________________________________________________________________//
-
-    //
-    //     for (int i = 0; i < 1; i++)
-    //     {
-    //         DebugCube *rootCube01 = new DebugCube("RootCube-" + std::to_string(i),
-    //                                               glm::vec3(1.0f),
-    //                                               glm::vec3(0.0f),
-    //                                               glm::vec3(0.0f, 0.0f, -2.0f));
-    //
-    //         BoundingSphere *boSphrRoot01 = new BoundingSphere(rootCube01);
-    //         boSphrRoot01->setDynamicUpdate(false);
-    //         rootCube01->addComponent(boSphrRoot01);
-    //
-    //         Scene::Instance()->addNode(rootCube01);
-    //
-    //         DebugCube *childCube01 = new DebugCube("ChildCube1-" + std::to_string(i),
-    //                                                glm::vec3(1.0f),
-    //                                                glm::vec3(0.0f),
-    //                                                glm::vec3(0.0f, 0.0f, -2.0f));
-    //
-    //         BoundingSphere *boSphrChild01 = new BoundingSphere(childCube01);
-    //         boSphrChild01->setDynamicUpdate(false);
-    //         childCube01->addComponent(boSphrChild01);
-    //         rootCube01->addChild(childCube01);
-    //
-    //         DebugCube *childCube02 = new DebugCube("ChildCube2-" + std::to_string(i),
-    //                                                glm::vec3(1.0f),
-    //                                                glm::vec3(0.0f),
-    //                                                glm::vec3(0.0f, 0.0f, -2.0f));
-    //
-    //         BoundingSphere *boSphrChild02 = new BoundingSphere(childCube02);
-    //         boSphrChild02->setDynamicUpdate(false);
-    //         childCube02->addComponent(boSphrChild02);
-    //         childCube01->addChild(childCube02);
-    //  }
-
-    //_______________________________________________________________________________________________________________________________________________________//
 
     for (auto node : Scene::Instance()->getNodes())
     {
@@ -173,5 +125,9 @@ void SampleNodeWork::render(int width, int height)
     {
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     EffectManager::Instance()->renderEffectsEmittors(projMatrix, viewMatrix);
+    glDisable(GL_BLEND);
 }

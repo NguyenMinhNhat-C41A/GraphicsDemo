@@ -62,6 +62,7 @@ void EmissionModeBurst::emit()
             newParticlePos,
             this->m_pEmittor->getStartScale(),
             newDirection,
+            this->m_pEmittor->getDefaultColour(),
             newLifespan);
     }
 }
