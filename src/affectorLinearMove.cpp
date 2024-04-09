@@ -54,12 +54,6 @@ Affector *AffectorLinearMove::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_
     return pAffLiMo;
 }
 
-AffectorLinearMove::AffectorLinearMove(Emittor *p_pEmittor) : Affector(p_pEmittor)
-{
-    this->m_vVelocity = glm::vec3(1.0f);
-    this->m_bIsMoveOnParticleDirection = false;
-}
-
 AffectorLinearMove::~AffectorLinearMove()
 {
 }
@@ -75,6 +69,12 @@ void AffectorLinearMove::update(float p_dt)
 // PRIVATE METHODS
 //
 //--------------------------------------------------------------------------------
+
+AffectorLinearMove::AffectorLinearMove(Emittor *p_pEmittor) : Affector(p_pEmittor)
+{
+    this->m_vVelocity = glm::vec3(1.0f);
+    this->m_bIsMoveOnParticleDirection = false;
+}
 
 void AffectorLinearMove::affect(float p_dt)
 {

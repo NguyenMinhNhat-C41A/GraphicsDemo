@@ -15,7 +15,7 @@ public:
     //--------------------------------------------------------------------------------
 
     static Shape *Factory(tinyxml2::XMLNode *p_pXMLNode);
-    ShapePoint();
+
     ~ShapePoint();
 
     virtual glm::vec2 getMinMaxX() override;
@@ -24,6 +24,14 @@ public:
     virtual std::string getShapeType() override;
 
 private:
+    //--------------------------------------------------------------------------------
+    //
+    // PRIVATE METHODS
+    //
+    //--------------------------------------------------------------------------------
+
+    ShapePoint();
+
     //--------------------------------------------------------------------------------
     //
     // PRIVATE VARIABLES

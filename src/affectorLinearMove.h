@@ -18,7 +18,6 @@ public:
 
     static Affector *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
 
-    AffectorLinearMove(Emittor *p_pEmittor);
     ~AffectorLinearMove();
     virtual void update(float p_dt) override;
 
@@ -37,6 +36,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
+    AffectorLinearMove(Emittor *p_pEmittor);
     glm::vec3 m_vVelocity = glm::vec3(1.0f);
     bool m_bIsMoveOnParticleDirection = false;
 };

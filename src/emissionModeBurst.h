@@ -15,8 +15,8 @@ public:
     // PUBLIC METHODS
     //
     //--------------------------------------------------------------------------------
+    
     static EmissionMode *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
-    EmissionModeBurst(Emittor *p_pEmittor);
     ~EmissionModeBurst();
 
     virtual void update(float p_dt) override;
@@ -28,6 +28,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
+    EmissionModeBurst(Emittor *p_pEmittor);
     virtual void emit() override;
 
     //--------------------------------------------------------------------------------
@@ -35,5 +36,6 @@ private:
     // PRIVATE VARIABLES
     //
     //--------------------------------------------------------------------------------
+
     float m_fEmissionDelay = 2.0f;
 };

@@ -34,10 +34,6 @@ EmissionMode *EmissionModeContinuous::Factory(Emittor *p_pEmittor, tinyxml2::XML
     return emmoCont;
 }
 
-EmissionModeContinuous::EmissionModeContinuous(Emittor *p_pEmittor) : EmissionMode(p_pEmittor)
-{
-}
-
 EmissionModeContinuous::~EmissionModeContinuous()
 {
 }
@@ -62,6 +58,10 @@ void EmissionModeContinuous::update(float p_dt)
 // PRIVATE METHODS
 //
 //--------------------------------------------------------------------------------
+
+EmissionModeContinuous::EmissionModeContinuous(Emittor *p_pEmittor) : EmissionMode(p_pEmittor)
+{
+}
 
 void EmissionModeContinuous::emit()
 {

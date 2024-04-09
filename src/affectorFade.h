@@ -16,7 +16,6 @@ public:
 
     static Affector *Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_pXMLNode);
 
-    AffectorFade(Emittor *p_pEmittor);
     ~AffectorFade();
     virtual void update(float p_dt) override;
 
@@ -27,5 +26,6 @@ private:
     //
     //--------------------------------------------------------------------------------
 
+    AffectorFade(Emittor *p_pEmittor);
     virtual void affect(float p_dt) override;
 };

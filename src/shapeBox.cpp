@@ -46,10 +46,6 @@ Shape *ShapeBox::Factory(tinyxml2::XMLNode *p_pXMLNode)
     return pShapeBox;
 }
 
-ShapeBox::ShapeBox()
-{
-}
-
 ShapeBox::~ShapeBox()
 {
 }
@@ -82,3 +78,7 @@ std::string ShapeBox::getShapeType()
 // PRIVATE METHODS
 //
 //--------------------------------------------------------------------------------
+
+ShapeBox::ShapeBox()
+{
+}

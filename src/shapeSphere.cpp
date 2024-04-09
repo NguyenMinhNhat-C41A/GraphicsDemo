@@ -35,10 +35,6 @@ Shape *ShapeSphere::Factory(tinyxml2::XMLNode *p_pXMLNode)
     return pShapeSphere;
 }
 
-ShapeSphere::ShapeSphere()
-{
-}
-
 ShapeSphere::~ShapeSphere()
 {
 }
@@ -61,4 +57,14 @@ glm::vec2 ShapeSphere::getMinMaxZ()
 std::string ShapeSphere::getShapeType()
 {
     return s_sShapeType;
+}
+
+//--------------------------------------------------------------------------------
+//
+// PRIVATE METHODS
+//
+//--------------------------------------------------------------------------------
+
+ShapeSphere::ShapeSphere()
+{
 }

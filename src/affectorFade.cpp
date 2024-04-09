@@ -6,10 +6,6 @@
 //
 //--------------------------------------------------------------------------------
 
-AffectorFade::AffectorFade(Emittor *p_pEmittor) : Affector(p_pEmittor)
-{
-}
-
 AffectorFade::~AffectorFade()
 {
 }
@@ -44,14 +40,14 @@ void AffectorFade::affect(float p_dt)
 
         activeParticle->setColour(colour);
     }
+}
 
-    Emittor::Particle *firstParticle = this->m_pEmittor->getActiveParticles()->getFirstParticle();
-    if (firstParticle != nullptr)
-    {
-        // std::cout << "AFFFADE - LIFESPAN:" << firstParticle->getLifespan() << std::endl;
-        // std::cout << "AFFFADE - AGE:" << firstParticle->getAge() << std::endl;
-        // std::cout << "AFFFADE - LIFE_RATIO:" << (1.0f - static_cast<float>(firstParticle->getAge() / firstParticle->getLifespan())) << std::endl;
-        // std::cout << "AFFFADE - ALPHA:" << firstParticle->getColour().a << std::endl;
-        // std::cout << "-----------------------------------------------------" << std::endl;
-    }
+//--------------------------------------------------------------------------------
+//
+// PRIVATE METHODS
+//
+//--------------------------------------------------------------------------------
+
+AffectorFade::AffectorFade(Emittor *p_pEmittor) : Affector(p_pEmittor)
+{
 }

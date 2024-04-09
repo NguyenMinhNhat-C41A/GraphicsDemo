@@ -532,30 +532,31 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
     //-----------------------------------
     // SETTING DEFAULTS
     //-----------------------------------
-
+    tinyxml2::XMLDocument xmlDoc;
+    tinyxml2::XMLNode *xmlVoidNode = xmlDoc.NewElement("VoidNode");
     if (emittor->m_pEmittorShape == nullptr)
     {
         printf("EMITTOR - SET_DEFAULT_EMITTOR_SHAPE\n");
-        ShapePoint *emittorShape = new ShapePoint();
+        Shape *emittorShape = ShapePoint::Factory(xmlVoidNode);
         emittor->m_pEmittorShape = emittorShape;
     }
 
     if (emittor->m_pEmissionMode == nullptr)
     {
         printf("EMITTOR - SET_DEFAULT_EMISSION_MODE\n");
-        EmissionMode *emissionMode = new EmissionModeContinuous(emittor);
+        EmissionMode *emissionMode = EmissionModeContinuous::Factory(emittor, xmlVoidNode);
         emittor->m_pEmissionMode = emissionMode;
     }
 
     if (emittor->m_vAffectors.size() == 0)
     {
         printf("EMITTOR - SET_DEFAULT_AFFECTOR\n");
-        emittor->m_vAffectors.push_back(new AffectorLinearMove(emittor));
+        emittor->m_vAffectors.push_back(AffectorLinearMove::Factory(emittor, xmlVoidNode));
     }
 
     if (emittor->m_pParticleTexture == nullptr)
     {
-        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("data/textures/Red.png");
+        emittor->m_pParticleTexture = wolf::TextureManager::CreateTexture("data/textures/Mosaic.png");
     }
 
     emittor->m_pParticleTexture->SetFilterMode(wolf::Texture::FM_Nearest);

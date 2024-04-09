@@ -34,10 +34,6 @@ EmissionMode *EmissionModeBurst::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode 
     return emmoBrst;
 }
 
-EmissionModeBurst::EmissionModeBurst(Emittor *p_pEmittor) : EmissionMode(p_pEmittor)
-{
-}
-
 EmissionModeBurst::~EmissionModeBurst()
 {
 }
@@ -57,6 +53,10 @@ void EmissionModeBurst::update(float p_dt)
 // PRIVATE METHODS
 //
 //--------------------------------------------------------------------------------
+
+EmissionModeBurst::EmissionModeBurst(Emittor *p_pEmittor) : EmissionMode(p_pEmittor)
+{
+}
 
 void EmissionModeBurst::emit()
 {
