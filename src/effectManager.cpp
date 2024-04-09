@@ -49,7 +49,9 @@ void EffectManager::renderEffectsEmittors(const glm::mat4 &p_mProj, const glm::m
 {
     for (auto effect : this->m_vpEffects)
     {
+        glDepthMask(GL_TRUE);
         effect->renderEmittors(p_mProj, p_mView);
+        glDepthMask(GL_TRUE);
     }
 }
 
