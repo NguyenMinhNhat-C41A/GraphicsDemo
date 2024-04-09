@@ -459,6 +459,18 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         }
 
         //-----------------------------------
+        // EMITTOR SHAPE
+        //-----------------------------------
+
+        else if (propTag.compare("ShapePoint") == 0)
+        {
+            if (emittor->m_pEmittorShape == nullptr)
+            {
+                emittor->m_pEmittorShape = ShapePoint::Factory(pXMLPropertiesNode);
+            }
+        }
+
+        //-----------------------------------
         // EMISSION MODE
         //-----------------------------------
 
@@ -503,9 +515,16 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
     //-----------------------------------
     // SETTING DEFAULTS
     //-----------------------------------
+
+    if (emittor->m_pEmittorShape == nullptr)
+    {
+        printf("EMITTOR - SET_DEFAULT_EMITTOR_SHAPE\n");
+        ShapePoint *emittorShape = new ShapePoint();
+        emittor->m_pEmittorShape = emittorShape;
+    }
+
     if (emittor->m_pEmissionMode == nullptr)
     {
-
         printf("EMITTOR - SET_DEFAULT_EMISSION_MODE\n");
         EmissionMode *emissionMode = new EmissionModeContinuous(emittor);
         emittor->m_pEmissionMode = emissionMode;

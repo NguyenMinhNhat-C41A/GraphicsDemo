@@ -17,6 +17,9 @@
                 <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
                 <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
             </Properties>
+
+            <ShapePoint>     
+            </ShapePoint>
             
             <EmissionModeContinuous>
                 <EmissionDelay time='0.005f' />
@@ -43,6 +46,9 @@
                 <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
                 <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
             </Properties>
+
+            <ShapePoint>     
+            </ShapePoint>
             
             <EmissionModeContinuous>
                 <EmissionDelay time='0.05f' />

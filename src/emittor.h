@@ -2,12 +2,19 @@
 #include <iostream>
 #include "../thirdparty/tinyxml2/tinyxml2.h"
 #include "../wolf/wolf.h"
+
 #include "vertex.h"
 #include "transform.h"
+
 #include "componentEffect.h"
+
+#include "shape.h"
+#include "shapePoint.h"
+
 #include "emissionMode.h"
 #include "emissionModeBurst.h"
 #include "emissionModeContinuous.h"
+
 #include "affector.h"
 #include "affectorLinearMove.h"
 #include "affectorScale.h"
@@ -150,6 +157,7 @@ private:
     //--------------------------------------------------------------------------------
 
     ComponentEffect *m_pCompFX = nullptr;
+    Shape *m_pEmittorShape = nullptr;
     EmissionMode *m_pEmissionMode = nullptr;
     std::vector<Affector *> m_vAffectors;
 
