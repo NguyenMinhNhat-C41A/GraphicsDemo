@@ -45,14 +45,18 @@ EmissionModeContinuous::~EmissionModeContinuous()
 void EmissionModeContinuous::update(float p_dt)
 {
     this->m_pTimer += p_dt;
+    this->m_fDurationTimer += p_dt;
 
-    if (this->m_pTimer >= this->m_fEmissionDelay)
+    if ((this->m_pEmittor->getEmittorDuration() < 0) ||
+        (this->m_pEmittor->getEmittorDuration() >= 0) && (this->m_fDurationTimer < this->m_pEmittor->getEmittorDuration()))
     {
-        this->emit();
-        this->m_pTimer = 0.0f;
+        if (this->m_pTimer >= this->m_fEmissionDelay)
+        {
+            this->emit();
+            this->m_pTimer = 0.0f;
+        }
     }
 }
-
 //--------------------------------------------------------------------------------
 //
 // PRIVATE METHODS
@@ -66,7 +70,6 @@ void EmissionModeContinuous::emit()
 
     for (int i = 0; i < ParticlesToSpawn; i++)
     {
-        // std::cout << "EMIMODECONT - EMIT:" << this->m_pTimer << std::endl;
         glm::vec3 newParticlePos = glm::vec3(
                                        RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
                                        RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,

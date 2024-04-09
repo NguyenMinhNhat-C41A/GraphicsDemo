@@ -30,5 +30,6 @@ private:
     //--------------------------------------------------------------------------------
 
     virtual void emit() override;
+    float m_fDurationTimer = 0.0f;
     float m_fEmissionDelay = 2.0f;
 };

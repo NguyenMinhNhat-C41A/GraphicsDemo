@@ -315,6 +315,21 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                 }
 
                 //-----------------------------------
+                // DURATION
+                //-----------------------------------
+
+                if (emiSpecsTag.compare("Duration") == 0)
+                {
+                    float duration = 1.0f;
+                    if (pXMLEmiSpecsNode->ToElement()->QueryFloatAttribute("time", &duration) != tinyxml2::XML_SUCCESS)
+                    {
+                        printf("EMITTOR - DEFAULT_EMITTOR_DURATION\n");
+                    }
+
+                    emittor->m_fEmittorDuration = duration;
+                }
+
+                //-----------------------------------
                 // DEFAULT COLOUR
                 //-----------------------------------
 
@@ -519,6 +534,7 @@ void Emittor::update(float p_dt)
     this->m_fTimer += p_dt;
 
     this->m_pEmissionMode->update(p_dt);
+
     for (auto affector : this->m_vAffectors)
     {
         affector->update(p_dt);
@@ -669,6 +685,11 @@ void Emittor::deactivateParticle(Particle *p_pParticle)
 Emittor::ParticlesList *Emittor::getActiveParticles()
 {
     return this->m_ActiveParticles;
+}
+
+float Emittor::getEmittorDuration()
+{
+    return this->m_fEmittorDuration;
 }
 
 float Emittor::getParticleBaseLifespan()
