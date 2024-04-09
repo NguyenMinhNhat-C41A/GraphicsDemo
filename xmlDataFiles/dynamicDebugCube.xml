@@ -18,8 +18,9 @@
                 <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
             </Properties>
 
-            <ShapePoint>     
-            </ShapePoint>
+            <ShapeBox>
+                <Dimensions width='4.0f' height='4.0f' length='4.0f' />     
+            </ShapeBox>
             
             <EmissionModeContinuous>
                 <EmissionDelay time='0.005f' />

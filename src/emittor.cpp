@@ -470,6 +470,14 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             }
         }
 
+        else if (propTag.compare("ShapeBox") == 0)
+        {
+            if (emittor->m_pEmittorShape == nullptr)
+            {
+                emittor->m_pEmittorShape = ShapeBox::Factory(pXMLPropertiesNode);
+            }
+        }
+
         //-----------------------------------
         // EMISSION MODE
         //-----------------------------------

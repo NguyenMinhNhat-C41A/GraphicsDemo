@@ -5,7 +5,7 @@
 
 #include "shape.h"
 
-class ShapePoint : public Shape
+class ShapeBox : public Shape
 {
 public:
     //--------------------------------------------------------------------------------
@@ -15,8 +15,8 @@ public:
     //--------------------------------------------------------------------------------
 
     static Shape *Factory(tinyxml2::XMLNode *p_pXMLNode);
-    ShapePoint();
-    ~ShapePoint();
+    ShapeBox();
+    ~ShapeBox();
 
     virtual glm::vec2 getMinMaxX() override;
     virtual glm::vec2 getMinMaxY() override;
@@ -29,5 +29,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    glm::vec3 m_vPoint = glm::vec3(0.0f);
+    float m_fWidth = 1.0f;
+    float m_fHeight = 1.0f;
+    float m_fLength = 1.0f;
 };

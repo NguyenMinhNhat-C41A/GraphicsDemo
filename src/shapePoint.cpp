@@ -6,7 +6,7 @@
 //
 //--------------------------------------------------------------------------------
 
-Shape *ShapePoint::Factory(tinyxml2::XMLNode *pXMLNode)
+Shape *ShapePoint::Factory(tinyxml2::XMLNode *p_pXMLNode)
 {
     ShapePoint *pShapePoint = new ShapePoint();
     return pShapePoint;

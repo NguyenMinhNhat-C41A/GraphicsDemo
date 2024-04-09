@@ -10,6 +10,7 @@
 
 #include "shape.h"
 #include "shapePoint.h"
+#include "shapeBox.h"
 
 #include "emissionMode.h"
 #include "emissionModeBurst.h"
