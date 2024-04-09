@@ -10,6 +10,27 @@ EmissionMode *EmissionModeBurst::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode 
 {
     EmissionModeBurst *emmoBrst = new EmissionModeBurst(p_pEmittor);
 
+    tinyxml2::XMLNode *pXMLPropertiesNode = p_pXMLNode->FirstChild();
+
+    while (pXMLPropertiesNode != nullptr)
+    {
+        std::string propTag = pXMLPropertiesNode->Value();
+
+        if (propTag.compare("EmissionDelay") == 0)
+        {
+            float delay = 2.0f;
+
+            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("time", &delay) != tinyxml2::XML_SUCCESS)
+            {
+                printf("EMMOBRST - DEFAULT_EMISSION_DELAY\n");
+            }
+
+            emmoBrst->m_fEmissionDelay = delay;
+        }
+
+        pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
+    }
+
     return emmoBrst;
 }
 

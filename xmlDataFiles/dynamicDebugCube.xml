@@ -19,6 +19,7 @@
             </Properties>
             
             <EmissionModeContinuous>
+                <EmissionDelay time='0.005f' />
             </EmissionModeContinuous>
 
             <AffectorLinearMove>
@@ -44,6 +45,7 @@
             </Properties>
             
             <EmissionModeContinuous>
+                <EmissionDelay time='0.05f' />
             </EmissionModeContinuous>
 
             <AffectorLinearMove>
