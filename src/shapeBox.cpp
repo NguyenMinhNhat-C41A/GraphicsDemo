@@ -1,5 +1,7 @@
 #include "shapeBox.h"
 
+std::string ShapeBox::s_sShapeType = "Box";
+
 //--------------------------------------------------------------------------------
 //
 // PUBLIC METHODS
@@ -68,6 +70,11 @@ glm::vec2 ShapeBox::getMinMaxZ()
 {
     float halfLength = this->m_fLength * 0.5f;
     return glm::vec2(-halfLength, halfLength);
+}
+
+std::string ShapeBox::getShapeType()
+{
+    return s_sShapeType;
 }
 
 //--------------------------------------------------------------------------------

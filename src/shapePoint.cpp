@@ -1,5 +1,7 @@
 #include "shapePoint.h"
 
+std::string ShapePoint::s_sShapeType = "Point";
+
 //--------------------------------------------------------------------------------
 //
 // PUBLIC METHODS
@@ -31,6 +33,11 @@ glm::vec2 ShapePoint::getMinMaxZ()
 {
 
     return glm::vec2(this->m_vPoint.z);
+}
+
+std::string ShapePoint::getShapeType()
+{
+    return s_sShapeType;
 }
 
 //--------------------------------------------------------------------------------

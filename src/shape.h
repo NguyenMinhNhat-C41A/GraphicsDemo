@@ -17,6 +17,8 @@ public:
 
     virtual glm::vec2 getMinMaxZ() = 0;
 
+    virtual std::string getShapeType() = 0;
+
 protected:
     //--------------------------------------------------------------------------------
     //
