@@ -12,14 +12,14 @@
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
-                <ParticleTexture texture='data/textures/Red.png'/>
+                <ParticleTexture texture='data/textures/Fire.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
                 <ParticleScaleStart x='4.0f' y='4.0f' z='4.0f' />
                 <ParticleScaleEnd x='1.0f' y='1.0f' z='1.0f' />  
             </Properties>
 
             <ShapeBox>
-                <Dimensions width='4.0f' height='4.0f' length='4.0f' />     
+                <Dimensions width='5.0f' height='5.0f' length='5.0f' />     
             </ShapeBox>
             
             <EmissionModeContinuous>
@@ -33,6 +33,9 @@
 
             <AffectorScale>
             </AffectorScale>      
+            
+            <AffectorFade>
+            </AffectorFade>
         </Emittor>
     </GOC_Effect>
 
@@ -42,14 +45,15 @@
             <Properties>
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
-                <ParticleTexture texture='data/textures/Mosaic.png' />
+                <ParticleTexture texture='data/textures/Smoke.png' />
                 <ParticleBaseLifespan time='5.0f'/>
-                <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
-                <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
+                <ParticleScaleStart x='2.0f' y='2.0f' z='2.0f' />
+                <ParticleScaleEnd x='8.0f' y='8.0f' z='8.0f' />  
             </Properties>
 
-            <ShapePoint>     
-            </ShapePoint>
+            <ShapeBox>
+                <Dimensions width='5.0f' height='5.0f' length='5.0f' />     
+            </ShapeBox>
             
             <EmissionModeContinuous>
                 <EmissionDelay time='0.05f' />
@@ -62,6 +66,9 @@
 
             <AffectorScale>
             </AffectorScale>
+        
+            <AffectorFade>
+            </AffectorFade>
         </Emittor>
     </GOC_Effect>
    

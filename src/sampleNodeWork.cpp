@@ -70,8 +70,8 @@ void SampleNodeWork::init()
     Node *ddbc = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
     Scene::Instance()->addDynamicNode(ddbc);
 
-    Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
-    Scene::Instance()->addDynamicNode(ddbc2);
+    // Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
+    // Scene::Instance()->addDynamicNode(ddbc2);
 
     for (auto node : Scene::Instance()->getNodes())
     {
