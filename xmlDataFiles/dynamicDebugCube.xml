@@ -14,8 +14,8 @@
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Red.png'/>
                 <ParticleBaseLifespan time='5.0f'/>
-                <ParticleScaleStart x='1.0f' y='1.0f' z='1.0f' />
-                <ParticleScaleEnd x='7.0f' y='7.0f' z='7.0f' />  
+                <ParticleScaleStart x='4.0f' y='4.0f' z='4.0f' />
+                <ParticleScaleEnd x='1.0f' y='1.0f' z='1.0f' />  
             </Properties>
 
             <ShapeBox>
