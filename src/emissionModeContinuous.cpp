@@ -65,10 +65,16 @@ void EmissionModeContinuous::update(float p_dt)
 
 void EmissionModeContinuous::emit()
 {
+    Shape *emittorShape = this->m_pEmittor->getEmittorShape();
+
+    glm::vec2 shapeMinMaxX = emittorShape->getMinMaxX();
+    glm::vec2 shapeMinMaxY = emittorShape->getMinMaxY();
+    glm::vec2 shapeMinMaxZ = emittorShape->getMinMaxZ();
+
     glm::vec3 newParticlePos = glm::vec3(
-                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f) +
+                                   RandomNumberGenerator::getRandomDecimal(shapeMinMaxX.x, shapeMinMaxX.y),
+                                   RandomNumberGenerator::getRandomDecimal(shapeMinMaxY.x, shapeMinMaxY.y),
+                                   RandomNumberGenerator::getRandomDecimal(shapeMinMaxZ.x, shapeMinMaxZ.y)) +
                                this->m_pEmittor->getOffset();
 
     glm::vec3 newDirection = glm::normalize(glm::vec3(
