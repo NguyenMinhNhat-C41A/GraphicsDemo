@@ -38,17 +38,6 @@ void SampleNodeWork::init()
     FactoryMethodsManager::Instance()->registerComponentFactoryMethod("GOC_BoundingSphere", BoundingSphere::Factory);
     FactoryMethodsManager::Instance()->registerComponentFactoryMethod("GOC_Effect", ComponentEffect::Factory);
 
-    //_______________________________________________________________________________________________________________________________________________________//
-
-    //     // int width = RandomNumberGenerator::getRandomNumber(6, 7);
-    //     // int height = RandomNumberGenerator::getRandomNumber(6, 7);
-    //
-    //     //  RandomNumberGenerator::getRandomNumber(121, 196)
-    //     // glm::vec3(RandomNumberGenerator::getRandomNumber(-70, 70), RandomNumberGenerator::getRandomNumber(-70, 70), RandomNumberGenerator::getRandomNumber(-70, 70))
-    //     // glm::vec3(RandomNumberGenerator::getRandomNumber(1, 5), RandomNumberGenerator::getRandomNumber(1, 5), RandomNumberGenerator::getRandomNumber(1, 5))
-
-    //_______________________________________________________________________________________________________________________________________________________//
-
     glm::vec2 hBounds = glm::vec2(-256, 256);
     glm::vec2 vBounds = glm::vec2(-128, 128);
 
@@ -128,8 +117,10 @@ void SampleNodeWork::render(int width, int height)
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
 
+    glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     EffectManager::Instance()->renderEffectsEmittors(projMatrix, viewMatrix);
     glDisable(GL_BLEND);
+    glDepthMask(GL_TRUE);
 }
