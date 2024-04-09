@@ -65,29 +65,23 @@ void EmissionModeContinuous::update(float p_dt)
 
 void EmissionModeContinuous::emit()
 {
+    glm::vec3 newParticlePos = glm::vec3(
+                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
+                                   RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f) +
+                               this->m_pEmittor->getOffset();
 
-    int ParticlesToSpawn = RandomNumberGenerator::getRandomNumber(1, 2);
+    glm::vec3 newDirection = glm::normalize(glm::vec3(
+        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+        RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
 
-    for (int i = 0; i < ParticlesToSpawn; i++)
-    {
-        glm::vec3 newParticlePos = glm::vec3(
-                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f,
-                                       RandomNumberGenerator::getRandomNumber(0, 2) / 4.0f) +
-                                   this->m_pEmittor->getOffset();
+    float newLifespan = this->m_pEmittor->getParticleBaseLifespan() + static_cast<float>(RandomNumberGenerator::getRandomNumber(0, 128) / 64.0f);
 
-        glm::vec3 newDirection = glm::normalize(glm::vec3(
-            RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-            RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-            RandomNumberGenerator::getRandomNumber(1, 64) * (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f));
-
-        float newLifespan = this->m_pEmittor->getParticleBaseLifespan() + static_cast<float>(RandomNumberGenerator::getRandomNumber(0, 128) / 64.0f);
-
-        this->m_pEmittor->activateParticle(
-            newParticlePos,
-            this->m_pEmittor->getStartScale(),
-            newDirection,
-            this->m_pEmittor->getDefaultColour(),
-            newLifespan);
-    }
+    this->m_pEmittor->activateParticle(
+        newParticlePos,
+        this->m_pEmittor->getStartScale(),
+        newDirection,
+        this->m_pEmittor->getDefaultColour(),
+        newLifespan);
 }

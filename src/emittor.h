@@ -128,6 +128,8 @@ public:
 
     ParticlesList *getActiveParticles();
 
+    Shape *getEmittorShape();
+
     float getEmittorDuration();
     float getParticleBaseLifespan();
 

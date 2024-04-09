@@ -706,6 +706,11 @@ Emittor::ParticlesList *Emittor::getActiveParticles()
     return this->m_ActiveParticles;
 }
 
+Shape *Emittor::getEmittorShape()
+{
+    return this->m_pEmittorShape;
+}
+
 float Emittor::getEmittorDuration()
 {
     return this->m_fEmittorDuration;
