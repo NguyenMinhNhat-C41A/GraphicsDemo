@@ -16,26 +16,26 @@ Affector *AffectorLinearMove::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_
     {
         std::string propTag = pXMLPropertiesNode->Value();
 
-        if (propTag.compare("Direction") == 0)
+        if (propTag.compare("Velocity") == 0)
         {
-            glm::vec3 direction = glm::vec3(1.0f);
+            glm::vec3 velocity = glm::vec3(1.0f);
 
-            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("x", &direction.x))
+            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("x", &velocity.x))
             {
                 printf("AFFLIMO - DEFAULT_DIRECTION_X\n");
             }
 
-            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("y", &direction.y))
+            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("y", &velocity.y))
             {
                 printf("AFFLIMO - DEFAULT_DIRECTION_Y\n");
             }
 
-            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("z", &direction.z))
+            if (pXMLPropertiesNode->ToElement()->QueryFloatAttribute("z", &velocity.z))
             {
                 printf("AFFLIMO - DEFAULT_DIRECTION_Z\n");
             }
 
-            pAffLiMo->m_vDirection = direction;
+            pAffLiMo->m_vVelocity = velocity;
         }
 
         else if (propTag.compare("IsMoveOnParticleDirection") == 0)
@@ -56,7 +56,7 @@ Affector *AffectorLinearMove::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *p_
 
 AffectorLinearMove::AffectorLinearMove(Emittor *p_pEmittor) : Affector(p_pEmittor)
 {
-    this->m_vDirection = glm::vec3(1.0f);
+    this->m_vVelocity = glm::vec3(1.0f);
     this->m_bIsMoveOnParticleDirection = false;
 }
 
@@ -82,16 +82,17 @@ void AffectorLinearMove::affect(float p_dt)
 
     if (this->m_bIsMoveOnParticleDirection)
     {
+        float speed = glm::length(this->m_vVelocity);
         for (auto particle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); particle != nullptr; particle = particle->getNextParticle())
         {
-            particle->translateOnDirection(p_dt * 10.0f);
+            particle->translateOnDirection(p_dt * speed);
         }
     }
     else
     {
         for (auto particle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); particle != nullptr; particle = particle->getNextParticle())
         {
-            particle->translate(this->m_vDirection * p_dt);
+            particle->translate(this->m_vVelocity * p_dt);
         }
     }
 }

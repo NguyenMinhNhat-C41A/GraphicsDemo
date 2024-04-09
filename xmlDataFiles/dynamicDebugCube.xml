@@ -13,8 +13,8 @@
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Fire.png'/>
-                <ParticleBaseLifespan time='5.0f'/>
-                <ParticleScaleStart x='4.0f' y='4.0f' z='4.0f' />
+                <ParticleBaseLifespan time='4.0f'/>
+                <ParticleScaleStart x='5.0f' y='5.0f' z='5.0f' />
                 <ParticleScaleEnd x='1.0f' y='1.0f' z='1.0f' />  
             </Properties>
 
@@ -27,15 +27,13 @@
             </EmissionModeContinuous>
 
             <AffectorLinearMove>
-                <Direction x="0.0f" y= "7.0f" z="0.0f" />
+                <Velocity x="0.0f" y= "8.0f" z="0.0f" />
                 <IsMoveOnParticleDirection isMOPD="true" />
             </AffectorLinearMove>
 
             <AffectorScale>
             </AffectorScale>      
-            
-            <AffectorFade>
-            </AffectorFade>
+
         </Emittor>
     </GOC_Effect>
 
@@ -60,8 +58,8 @@
             </EmissionModeContinuous>
 
             <AffectorLinearMove>
-                <Direction x="0.0f" y= "16.0f" z="0.0f" />
-                <IsMoveOnParticleDirection isMOPD="false" />
+                <Velocity x="0.0f" y= "12.0f" z="0.0f" />
+                <IsMoveOnParticleDirection isMOPD="true" />
             </AffectorLinearMove>
 
             <AffectorScale>

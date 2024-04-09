@@ -37,6 +37,6 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    glm::vec3 m_vDirection = glm::vec3(1.0f);
+    glm::vec3 m_vVelocity = glm::vec3(1.0f);
     bool m_bIsMoveOnParticleDirection = false;
 };
