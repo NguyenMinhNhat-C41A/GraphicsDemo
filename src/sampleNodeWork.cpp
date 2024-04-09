@@ -73,7 +73,7 @@ void SampleNodeWork::update(float dt)
 {
     Scene::Instance()->update(dt);
 
-    EffectManager::Instance()->updateEffectsEmittors(dt);
+    EffectManager::Instance()->updateEmittors(dt);
 
     Scene::Instance()->getCamera()->update(dt);
     this->counter += dt;
@@ -117,10 +117,12 @@ void SampleNodeWork::render(int width, int height)
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
 
+    EffectManager::Instance()->renderOpaqueEmittors(projMatrix, viewMatrix);
+
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    EffectManager::Instance()->renderEffectsEmittors(projMatrix, viewMatrix);
+    EffectManager::Instance()->renderTransparentEmittors(projMatrix, viewMatrix);
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
 }

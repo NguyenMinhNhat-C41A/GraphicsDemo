@@ -523,6 +523,7 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
         else if (propTag.compare("AffectorFade") == 0)
         {
             emittor->m_vAffectors.push_back(AffectorFade::Factory(emittor, pXMLPropertiesNode));
+            emittor->m_bAreParticlesTransparent = true;
         }
 
         pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
@@ -720,6 +721,11 @@ void Emittor::deactivateParticle(Particle *p_pParticle)
 Emittor::ParticlesList *Emittor::getActiveParticles()
 {
     return this->m_ActiveParticles;
+}
+
+bool Emittor::areParticlesTransparent()
+{
+    return this->m_bAreParticlesTransparent;
 }
 
 Shape *Emittor::getEmittorShape()

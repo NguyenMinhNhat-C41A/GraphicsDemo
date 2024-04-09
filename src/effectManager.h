@@ -1,8 +1,10 @@
 #pragma once
 #include "../wolf/wolf.h"
 #include "componentEffect.h"
+#include "emittor.h"
 #include <vector>
 class ComponentEffect;
+class Emittor;
 class EffectManager
 {
 public:
@@ -10,16 +12,17 @@ public:
     static void destroyInstance();
     static EffectManager *Instance();
 
-    void addEffect(ComponentEffect *compEffect);
-    void removeEffect(ComponentEffect *compEffect);
+    void addEmittor(Emittor *p_pEmittor);
 
-    void updateEffectsEmittors(float p_dt);
-    void renderEffectsEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
+    void updateEmittors(float p_dt);
+    void renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
+    void renderTransparentEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
 
 private:
     EffectManager(wolf::App *p_pApp);
     ~EffectManager();
     static EffectManager *s_pEffectManager;
 
-    std::vector<ComponentEffect *> m_vpEffects;
+    std::vector<Emittor *> m_vpOpaqueEmittors;
+    std::vector<Emittor *> m_vpTransparentEmittors;
 };

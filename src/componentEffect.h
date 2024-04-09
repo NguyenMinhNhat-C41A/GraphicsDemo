@@ -27,8 +27,6 @@ public:
     virtual void update(float dt) override;
 
     void addEmittor(Emittor *p_pEmittor);
-    void updateEmittors(float p_dt);
-    void renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
 
     glm::vec3 getGlobalTranslate();
 

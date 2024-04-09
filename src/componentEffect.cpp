@@ -8,7 +8,6 @@
 
 ComponentEffect ::~ComponentEffect()
 {
-    EffectManager::Instance()->removeEffect(this);
     for (auto emittor : this->m_vEmittors)
     {
         delete emittor;
@@ -49,22 +48,7 @@ void ComponentEffect::update(float dt)
 void ComponentEffect::addEmittor(Emittor *p_pEmittor)
 {
     this->m_vEmittors.push_back(p_pEmittor);
-}
-
-void ComponentEffect::updateEmittors(float p_dt)
-{
-    for (auto emittor : this->m_vEmittors)
-    {
-        emittor->update(p_dt);
-    }
-}
-
-void ComponentEffect::renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
-{
-    for (auto emittor : this->m_vEmittors)
-    {
-        emittor->render(p_mProj, p_mView);
-    }
+    EffectManager::Instance()->addEmittor(p_pEmittor);
 }
 
 glm::vec3 ComponentEffect::getGlobalTranslate()
@@ -80,5 +64,4 @@ glm::vec3 ComponentEffect::getGlobalTranslate()
 
 ComponentEffect::ComponentEffect(Node *p_pCompNode) : ComponentBase(p_pCompNode)
 {
-    EffectManager::Instance()->addEffect(this);
-};
+}
