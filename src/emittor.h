@@ -11,6 +11,7 @@
 #include "shape.h"
 #include "shapePoint.h"
 #include "shapeBox.h"
+#include "shapeSphere.h"
 
 #include "emissionMode.h"
 #include "emissionModeBurst.h"

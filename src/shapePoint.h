@@ -30,7 +30,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    static std::string s_sShapeType;
+    static const std::string s_sShapeType;
 
     glm::vec3 m_vPoint = glm::vec3(0.0f);
 };

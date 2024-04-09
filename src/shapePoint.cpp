@@ -1,6 +1,6 @@
 #include "shapePoint.h"
 
-std::string ShapePoint::s_sShapeType = "Point";
+const std::string ShapePoint::s_sShapeType = "Point";
 
 //--------------------------------------------------------------------------------
 //

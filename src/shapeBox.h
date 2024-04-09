@@ -30,7 +30,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    static std::string s_sShapeType;
+    static const  std::string s_sShapeType;
 
     float m_fWidth = 1.0f;
     float m_fHeight = 1.0f;

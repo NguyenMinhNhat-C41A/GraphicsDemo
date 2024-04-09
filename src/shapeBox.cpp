@@ -1,6 +1,6 @@
 #include "shapeBox.h"
 
-std::string ShapeBox::s_sShapeType = "Box";
+const std::string ShapeBox::s_sShapeType = "Box";
 
 //--------------------------------------------------------------------------------
 //
