@@ -841,6 +841,9 @@ Emittor::~Emittor()
 {
     this->m_pCompFX = nullptr;
 
+    delete this->m_pEmittorShape;
+    this->m_pEmittorShape = nullptr;
+
     delete this->m_pEmissionMode;
     this->m_pEmissionMode = nullptr;
 

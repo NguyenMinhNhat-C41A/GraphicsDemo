@@ -10,6 +10,7 @@ ComponentEffect ::~ComponentEffect()
 {
     for (auto emittor : this->m_vEmittors)
     {
+        EffectManager::Instance()->removeEmittor(emittor);
         delete emittor;
         emittor = nullptr;
     }

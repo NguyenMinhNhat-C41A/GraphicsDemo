@@ -13,6 +13,7 @@ public:
     static EffectManager *Instance();
 
     void addEmittor(Emittor *p_pEmittor);
+    void removeEmittor(Emittor *p_pEmittor);
 
     void updateEmittors(float p_dt);
     void renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);

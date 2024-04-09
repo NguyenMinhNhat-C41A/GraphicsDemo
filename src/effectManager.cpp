@@ -29,6 +29,23 @@ void EffectManager::addEmittor(Emittor *p_pEmittor)
     }
 }
 
+void EffectManager::removeEmittor(Emittor *p_pEmittor)
+{
+    if (p_pEmittor->areParticlesTransparent())
+    {
+        this->m_vpTransparentEmittors.erase(
+            std::remove(this->m_vpTransparentEmittors.begin(), this->m_vpTransparentEmittors.end(), p_pEmittor),
+            this->m_vpTransparentEmittors.end());
+    }
+
+    else
+    {
+        this->m_vpOpaqueEmittors.erase(
+            std::remove(this->m_vpOpaqueEmittors.begin(), this->m_vpOpaqueEmittors.end(), p_pEmittor),
+            this->m_vpOpaqueEmittors.end());
+    }
+}
+
 void EffectManager::updateEmittors(float p_dt)
 {
     for (auto emittor : this->m_vpOpaqueEmittors)
