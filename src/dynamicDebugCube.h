@@ -10,7 +10,7 @@ public:
     static Node *Factory(tinyxml2::XMLNode *p_xmlNode);
 
     DynamicDebugCube();
-    DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr);
+    // DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr);
 
     ~DynamicDebugCube();
     virtual void update(float p_dt) override;

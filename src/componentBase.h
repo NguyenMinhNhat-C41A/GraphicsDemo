@@ -8,7 +8,12 @@ class ComponentBase
 public:
     friend Node;
 
-        virtual std::string ComponentID() = 0;
+    virtual std::string ComponentID() = 0;
+
+    Node *getComponentNode()
+    {
+        return this->m_pCompNode;
+    };
 
 protected:
     ComponentBase(Node *p_pCompNode);

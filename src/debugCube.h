@@ -10,6 +10,7 @@ class DebugCube : public Node
 {
 public:
     static Node *Factory(tinyxml2::XMLNode *p_pXMLNode);
+    DebugCube();
     DebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr);
     ~DebugCube();
 

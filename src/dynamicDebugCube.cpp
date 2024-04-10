@@ -2,11 +2,7 @@
 
 Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 {
-    DynamicDebugCube *ddbc = nullptr;
-    std::string name = "DynamicDebugCube" + std::to_string(s_iNodeCount);
-    glm::vec3 scale = glm::vec3(1.0f);
-    glm::vec3 rotation = glm::vec3(0.0f);
-    glm::vec3 translation = glm::vec3(0.0f);
+    DynamicDebugCube *ddbc = new DynamicDebugCube();
 
     std::vector<ComponentBase *> components;
 
@@ -36,7 +32,7 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
                 //-----------------------------------
                 if (propTag.compare("Scale") == 0)
                 {
-                    float scX, scY, scZ = 0.0f;
+                    glm::vec3 scale = glm::vec3(1.0f);
                     bool random = false;
                     tinyxml2::XMLElement *propElement = pXMLPropNode->ToElement();
                     tinyxml2::XMLError queryResultRandom = propElement->QueryBoolAttribute("random", &random);
@@ -53,25 +49,22 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
                     }
                     else
                     {
-                        if (propElement->QueryFloatAttribute("x", &scX) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("x", &scale.x) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:SC_X" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("y", &scY) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("y", &scale.y) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:SC_Y" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("z", &scZ) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("z", &scale.z) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:SC_Z" << std::endl;
                         }
-
-                        // std::cout << "DYDEBCUBE - SCX:" << scX << " - SCY:" << scY << " - SCZ:" << scZ << std::endl;
-
-                        scale = glm::vec3(scX, scY, scZ);
                     }
+                    ddbc->setScale(scale);
                 }
 
                 //-----------------------------------
@@ -80,7 +73,7 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 
                 else if (propTag.compare("Rotation") == 0)
                 {
-                    float roX, roY, roZ = 0.0f;
+                    glm::vec3 rotation = glm::vec3(0.0f);
                     bool random = false;
                     tinyxml2::XMLElement *propElement = pXMLPropNode->ToElement();
                     tinyxml2::XMLError queryResultRandom = propElement->QueryBoolAttribute("random", &random);
@@ -97,25 +90,24 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
                     }
                     else
                     {
-                        if (propElement->QueryFloatAttribute("x", &roX) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("x", &rotation.x) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:RO_X" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("y", &roY) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("y", &rotation.y) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:RO_Y" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("z", &roZ) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("z", &rotation.z) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:RO_Z" << std::endl;
                         }
 
                         // std::cout << "DYDEBCUBE - ROX:" << roX << " - ROY:" << roY << " - ROZ:" << roZ << std::endl;
-
-                        rotation = glm::vec3(roX, roY, roZ);
                     }
+                    ddbc->setRotate(rotation);
                 }
 
                 //-----------------------------------
@@ -124,7 +116,7 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 
                 else if (propTag.compare("Translation") == 0)
                 {
-                    float trX, trY, trZ = 0.0f;
+                    glm::vec3 translation = glm::vec3(0.0f);
                     bool random = false;
                     tinyxml2::XMLElement *propElement = pXMLPropNode->ToElement();
                     tinyxml2::XMLError queryResultRandom = propElement->QueryBoolAttribute("random", &random);
@@ -141,25 +133,22 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
                     }
                     else
                     {
-                        if (propElement->QueryFloatAttribute("x", &trX) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("x", &translation.x) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:TR_X" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("y", &trY) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("y", &translation.y) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:TR_Y" << std::endl;
                         }
 
-                        if (propElement->QueryFloatAttribute("z", &trZ) != tinyxml2::XML_SUCCESS)
+                        if (propElement->QueryFloatAttribute("z", &translation.z) != tinyxml2::XML_SUCCESS)
                         {
                             std::cerr << "DYDEBCUBE - ERROR:DATA_NOT_FOUND:TR_Z" << std::endl;
                         }
-
-                        // std::cout << "DYDEBCUBE - TRX:" << trX << " - TRY:" << trY << " - TRZ:" << trZ << std::endl;
-
-                        translation = glm::vec3(trX, trY, trZ);
                     }
+                    ddbc->setTranslate(translation);
                 }
 
                 pXMLPropNode = pXMLPropNode->NextSibling();
@@ -182,7 +171,19 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
         pXMLPropCompNode = pXMLPropCompNode->NextSibling();
     }
 
-    ddbc = new DynamicDebugCube(name, scale, rotation, translation);
+    //-----------------------------------
+    // INITIALISE PROPERTIES
+    //-----------------------------------
+
+    ddbc->m_fOrbitRadius = glm::length(ddbc->getGlobalTranslate());
+    ddbc->yPos = ddbc->getTranslate().y;
+    ddbc->m_vRotOffset = ddbc->getRotate();
+    ddbc->m_fOrbitDir = (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f;
+
+    //-----------------------------------
+    // ADD COMPONENTS
+    //-----------------------------------
+
     for (auto component : components)
     {
         ddbc->addComponent(component);
@@ -195,27 +196,21 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 
 DynamicDebugCube::DynamicDebugCube() : DebugCube("DynamicDebugCube" + std::to_string(s_iNodeCount), glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(0.0f))
 {
-    this->m_fOrbitRadius = glm::length(this->getGlobalTranslate());
-    this->yPos = 0.0f;
-    this->m_vRotOffset = glm::vec3(0.0f);
-    this->m_vTrlOffset = glm::vec3(0.0f);
-    this->m_fOrbitDir = 1.0f;
-    this->m_vRotDir = glm::vec3(1.0f);
 }
 
-DynamicDebugCube::DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr) : DebugCube(p_newName, p_vNewSc, p_vNewRo, p_vNewTr)
-{
-    this->m_fOrbitRadius = glm::length(this->getGlobalTranslate());
-    this->yPos = p_vNewTr.y;
-    this->m_vRotOffset = p_vNewRo;
-    this->m_vTrlOffset = p_vNewTr;
-    this->m_fOrbitDir = (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f;
-    // printf("DYDEBCUBE - ORBITDIR:%2f\n", this->m_fOrbitDir);
-    this->m_vRotDir = glm::vec3(
-        (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-        (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-        (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f);
-}
+// DynamicDebugCube::DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr) : DebugCube(p_newName, p_vNewSc, p_vNewRo, p_vNewTr)
+// {
+//     this->m_fOrbitRadius = glm::length(this->getGlobalTranslate());
+//     this->yPos = p_vNewTr.y;
+//     this->m_vRotOffset = p_vNewRo;
+//     this->m_vTrlOffset = p_vNewTr;
+//     this->m_fOrbitDir = (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f;
+//     // printf("DYDEBCUBE - ORBITDIR:%2f\n", this->m_fOrbitDir);
+//     this->m_vRotDir = glm::vec3(
+//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
+//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f);
+// }
 
 DynamicDebugCube::~DynamicDebugCube()
 {

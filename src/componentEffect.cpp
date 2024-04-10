@@ -21,7 +21,6 @@ ComponentBase *ComponentEffect::Factory(Node *p_pCompNode, tinyxml2::XMLNode *p_
 {
     ComponentEffect *pEffectComp = new ComponentEffect(p_pCompNode);
     tinyxml2::XMLNode *pXMLPropertiesNode = p_pXMLNode->FirstChild();
-
     while (pXMLPropertiesNode != nullptr)
     {
         std::string propTag = pXMLPropertiesNode->Value();

@@ -526,6 +526,12 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
             emittor->m_bAreParticlesTransparent = true;
         }
 
+        else if (propTag.compare("AffectorMotherlyLove") == 0)
+        {
+            emittor->m_vAffectors.push_back(AffectorMotherlyLove::Factory(emittor, pXMLPropertiesNode));
+            emittor->m_bAreParticlesTransparent = true;
+        }
+
         pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
     }
 
@@ -639,6 +645,11 @@ void Emittor::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
     this->m_pParticleTexture->Bind(0);
 
     glDrawArrays(GL_TRIANGLES, 0, this->m_ActiveParticles->particlesCount * 6);
+}
+
+ComponentEffect *Emittor::getHostComponent()
+{
+    return this->m_pCompFX;
 }
 
 void Emittor::addParticle()

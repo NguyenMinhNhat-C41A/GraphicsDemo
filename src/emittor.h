@@ -21,6 +21,7 @@
 #include "affectorLinearMove.h"
 #include "affectorScale.h"
 #include "affectorFade.h"
+#include "affectorMotherlyLove.h"
 
 class ComponentEffect;
 class EmissionMode;
@@ -121,6 +122,8 @@ public:
     void update(float p_dt);
     void render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
 
+    ComponentEffect *getHostComponent();
+
     void addParticle();
 
     void activateParticle();
@@ -178,7 +181,7 @@ private:
 
     float m_fTimer = 0.0f;
 
-    float m_fEmittorDuration = 1.0f;
+    float m_fEmittorDuration = -1.0f;
     float m_fParticleBaseLifespan = 1.0f;
     bool m_bAreParticlesTransparent = false;
     wolf::Texture *m_pParticleTexture = nullptr;
