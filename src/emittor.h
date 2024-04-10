@@ -162,19 +162,26 @@ private:
     //
     //--------------------------------------------------------------------------------
 
+    wolf::VertexBuffer *m_pVB = nullptr;
+    wolf::VertexDeclaration *m_pDecl = nullptr;
+    wolf::Program *m_pProgram = nullptr;
+
+    ParticlesList *m_DormantParticles = nullptr;
+    ParticlesList *m_ActiveParticles = nullptr;
+
     ComponentEffect *m_pCompFX = nullptr;
     Shape *m_pEmittorShape = nullptr;
     EmissionMode *m_pEmissionMode = nullptr;
     std::vector<Affector *> m_vAffectors;
 
-    int m_iNumParticles = 0;
-    int m_iNumParticlesCap = 50;
-    float m_fParticleBaseLifespan = 1.0f;
+    int m_iParticlesCap = 512;
 
     float m_fTimer = 0.0f;
-    float m_fEmittorDuration = 1.0f;
 
+    float m_fEmittorDuration = 1.0f;
+    float m_fParticleBaseLifespan = 1.0f;
     bool m_bAreParticlesTransparent = false;
+    wolf::Texture *m_pParticleTexture = nullptr;
 
     glm::vec3 m_vOffset = glm::vec3(1.0f);
     glm::vec4 m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);
@@ -183,16 +190,7 @@ private:
     glm::vec3 m_vEndScale = glm::vec3(1.0f);
     glm::vec3 m_vDeltaScale = glm::vec3(0.0f);
 
-    ParticlesList *m_DormantParticles = nullptr;
-    ParticlesList *m_ActiveParticles = nullptr;
-
-    wolf::VertexBuffer *m_pVB = nullptr;
-    wolf::VertexDeclaration *m_pDecl = nullptr;
-    wolf::Program *m_pProgram = nullptr;
-
-    wolf::Texture *m_pParticleTexture = nullptr;
-
-    QuadVertexColouredTextured m_ParticleVertices[7168];
+    QuadVertexColouredTextured m_ParticleVertices[6144];
 
     static int s_iEmittorCounter;
 };

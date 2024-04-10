@@ -799,8 +799,6 @@ Emittor::Emittor(ComponentEffect *compFX)
 
     this->m_pCompFX = compFX;
 
-    this->m_iNumParticles = 0;
-    this->m_iNumParticlesCap = 512;
     this->m_fTimer = 0.0f;
 
     this->m_vOffset = glm::vec3(1.0f);
@@ -829,13 +827,10 @@ Emittor::Emittor(ComponentEffect *compFX)
     this->m_DormantParticles = new ParticlesList();
     this->m_ActiveParticles = new ParticlesList();
 
-    for (int i = 0; i < this->m_iNumParticlesCap; i++)
+    for (int i = 0; i < this->m_iParticlesCap; i++)
     {
-
         this->addParticle();
     }
-
-    this->m_iNumParticles = m_iNumParticlesCap;
 }
 
 Emittor::~Emittor()
