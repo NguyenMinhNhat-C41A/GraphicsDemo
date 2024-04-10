@@ -46,11 +46,11 @@
                 <ParticleTexture texture='data/textures/Smoke.png' />
                 <ParticleBaseLifespan time='5.0f'/>
                 <ParticleScaleStart x='2.0f' y='2.0f' z='2.0f' />
-                <ParticleScaleEnd x='8.0f' y='8.0f' z='8.0f' />  
+                <ParticleScaleEnd x='10.0f' y='10.0f' z='10.0f' />  
             </Properties>
 
             <ShapeBox>
-                <Dimensions width='5.0f' height='5.0f' length='5.0f' />     
+                <Dimensions width='8.0f' height='8.0f' length='8.0f' />     
             </ShapeBox>
             
             <EmissionModeContinuous>
@@ -59,7 +59,7 @@
 
             <AffectorLinearMove>
                 <Velocity x="0.0f" y= "12.0f" z="0.0f" />
-                <IsMoveOnParticleDirection isMOPD="true" />
+                <IsMoveOnParticleDirection isMOPD="false" />
             </AffectorLinearMove>
 
             <AffectorScale>
