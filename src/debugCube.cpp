@@ -156,7 +156,7 @@ Node *DebugCube::Factory(tinyxml2::XMLNode *p_pXMLNode)
 
                         if (propElement->QueryFloatAttribute("z", &rotation.z) != tinyxml2::XML_SUCCESS)
                         {
-                            std::cerr << "DDEBUGCUBE - ERROR:DATA_NOT_FOUND:RO_Z" << std::endl;
+                            std::cerr << "DEBUGCUBE - ERROR:DATA_NOT_FOUND:RO_Z" << std::endl;
                         }
 
                         // std::cout << "DEBUGCUBE - ROX:" << roX << " - ROY:" << roY << " - ROZ:" << roZ << std::endl;
@@ -177,13 +177,19 @@ Node *DebugCube::Factory(tinyxml2::XMLNode *p_pXMLNode)
 
                     if (queryResultRandom == tinyxml2::XML_SUCCESS && random)
                     {
-                        // printf("DYDEBCUBE - TRANSLATION_RANDOM\n");
-                        int rangeLower = -128;
-                        int rangeUpper = 128;
+                        int rangeLowerX = -200;
+                        int rangeUpperX = 200;
+
+                        int rangeLowerY = -128;
+                        int rangeUpperY = 128;
+
+                        int rangeLowerZ = -200;
+                        int rangeUpperZ = 200;
+
                         translation = glm::vec3(
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper),
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper),
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper));
+                            RandomNumberGenerator::getRandomNumber(rangeLowerX, rangeUpperX),
+                            RandomNumberGenerator::getRandomNumber(rangeLowerY, rangeUpperY),
+                            RandomNumberGenerator::getRandomNumber(rangeLowerZ, rangeUpperZ));
                     }
                     else
                     {

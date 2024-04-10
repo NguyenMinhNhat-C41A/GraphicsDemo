@@ -43,25 +43,19 @@ void SampleNodeWork::init()
     glm::vec2 hBounds = glm::vec2(-256, 256);
     glm::vec2 vBounds = glm::vec2(-128, 128);
 
-    for (int i = 0; i < RandomNumberGenerator::getRandomNumber(81, 121); i++)
+    for (int i = 0; i < RandomNumberGenerator::getRandomNumber(64, 80); i++)
     {
-        Node *rootCube01 = FactoryMethodsManager::Instance()->createNode("debugCube.xml");
+
+        Node *rootCube01 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCube.xml");
         Scene::Instance()->addNode(rootCube01);
-
-        DebugCube *childCube01 = new DebugCube("ChildCube1-" + std::to_string(i),
-                                               glm::vec3(RandomNumberGenerator::getRandomNumber(1, 5) / 5.0f),
-                                               glm::vec3(RandomNumberGenerator::getRandomNumber(0, 359), RandomNumberGenerator::getRandomNumber(0, 359), RandomNumberGenerator::getRandomNumber(0, 359)),
-                                               glm::vec3(RandomNumberGenerator::getRandomNumber(1, 4), RandomNumberGenerator::getRandomNumber(1, 4), RandomNumberGenerator::getRandomNumber(1, 4)));
-
-        BoundingSphere *boSphrChild01 = dynamic_cast<BoundingSphere *>(BoundingSphere::createComponent(childCube01));
-        boSphrChild01->setDynamicUpdate(false);
+        Node *childCube01 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCubeChild.xml");
         rootCube01->addChild(childCube01);
     }
 
-    Node *ddbc = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
+    Node *ddbc = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
     Scene::Instance()->addDynamicNode(ddbc);
 
-    Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("dynamicDebugCube.xml");
+    Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
     Scene::Instance()->addDynamicNode(ddbc2);
 
     for (auto node : Scene::Instance()->getNodes())
@@ -108,12 +102,15 @@ void SampleNodeWork::render(int width, int height)
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
 
+    glEnable(GL_BLEND);
+
     EffectManager::Instance()->renderOpaqueEmittors(projMatrix, viewMatrix);
 
     glDepthMask(GL_FALSE);
-    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     EffectManager::Instance()->renderTransparentEmittors(projMatrix, viewMatrix);
-    glDisable(GL_BLEND);
+
     glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
 }

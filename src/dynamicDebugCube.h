@@ -7,15 +7,36 @@
 class DynamicDebugCube : public DebugCube
 {
 public:
+    //--------------------------------------------------------------------------------
+    //
+    // PUBLIC METHODS
+    //
+    //--------------------------------------------------------------------------------
+
     static Node *Factory(tinyxml2::XMLNode *p_xmlNode);
-
-    DynamicDebugCube();
-    // DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr);
-
     ~DynamicDebugCube();
+
     virtual void update(float p_dt) override;
 
+    virtual void setScale(const glm::vec3 &p_vNewSc) override;
+    virtual void setRotate(const glm::vec3 &p_vNewRo) override;
+    virtual void setTranslate(const glm::vec3 &p_vNewTr) override;
+
 private:
+    //--------------------------------------------------------------------------------
+    //
+    // PRIVATE METHODS
+    //
+    //--------------------------------------------------------------------------------
+
+    DynamicDebugCube();
+
+    //--------------------------------------------------------------------------------
+    //
+    // PRIVATE VARIABLES
+    //
+    //--------------------------------------------------------------------------------
+
     float m_fOrbitRadius = 0.0f;
     float m_fCounter = 0.0f;
     float yPos = 0.0f;

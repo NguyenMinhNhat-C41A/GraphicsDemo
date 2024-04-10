@@ -88,6 +88,30 @@ ComponentBase *BoundingSphere::createComponent(Node *p_pCompNode)
 ComponentBase *BoundingSphere::Factory(Node *p_pCompNode, tinyxml2::XMLNode *p_pXMLNode)
 {
     BoundingSphere *pBoSphrComp = new BoundingSphere(p_pCompNode);
+
+    tinyxml2::XMLNode *pXMLPropertiesNode = p_pXMLNode->FirstChild();
+
+    while (pXMLPropertiesNode != nullptr)
+    {
+
+        std::string propTag = pXMLPropertiesNode->Value();
+
+        //-----------------------------------
+        // PROPERTIES
+        //-----------------------------------
+        if (propTag.compare("IsDynamicUpdate") == 0)
+        {
+            bool isDU = true;
+
+            if (pXMLPropertiesNode->ToElement()->QueryBoolAttribute("isDU", &isDU) != tinyxml2::XML_SUCCESS)
+            {
+                printf("CBOSPHR - DEFAULT_IS_DYNAMIC_UPDATE\n");
+            }
+            pBoSphrComp->m_bIsDynamicUpdate = isDU;
+        }
+
+        pXMLPropertiesNode = pXMLPropertiesNode->NextSibling();
+    }
     return pBoSphrComp;
 }
 
@@ -160,13 +184,8 @@ bool BoundingSphere::intersectsPoint(const glm::vec3 &p_Point)
 
 bool BoundingSphere::isIntersectingOrBeforePlane(const Plane &p_Plane)
 {
-    // std::cout << "BOSPHR - PLANE_TAG: " << p_Plane.tag << std::endl;
-    // std::cout << "BOSPHR - PLANE_NORMAL: " << p_Plane.normal.x << ", " << p_Plane.normal.y << ", " << p_Plane.normal.z << std::endl;
     float signedDistance = glm::dot(p_Plane.normal, this->getGlobalCentre()) + p_Plane.distance;
-
     bool result = signedDistance > -this->m_fRadius;
-
-    // std::cout << "BOSPHR - IOBCHECK: " << result << std::endl;
     return result;
 }
 
@@ -178,7 +197,6 @@ void BoundingSphere::init()
 
 void BoundingSphere::update(float dt)
 {
-    // std::cout << "BOSPHR - RADIUS: " << this->m_fRadius << std::endl;
     if (this->m_bIsDynamicUpdate)
     {
         if (this->m_bIsDirtyImmediateChildrenCount || this->m_bIsDirtyNodeTransform)
@@ -201,8 +219,6 @@ void BoundingSphere::update(float dt)
 
 void BoundingSphere::render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
-    // std::cout << "BOSPHR - RENDER_TEST_SCALE: " << this->m_pTransform->getScale().x * this->m_fRadius << std::endl;
-
     glm::mat4 mWorld = glm::translate(glm::mat4(1.0f), this->getGlobalCentre()) *
                        glm::scale(glm::mat4(1.0f), this->m_pTransform->getScale() * this->m_fRadius * 2.0f);
     this->m_pProgram->SetUniform("projection_view", p_mProj * p_mView);

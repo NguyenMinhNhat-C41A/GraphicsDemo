@@ -59,9 +59,8 @@ void FactoryMethodsManager::registerComponentFactoryMethod(const std::string &p_
 
 Node *FactoryMethodsManager::createNode(const std::string &p_sDataFilePath)
 {
-    std::string truePath = "xmlDataFiles/" + p_sDataFilePath;
     tinyxml2::XMLDocument xmlDoc;
-    tinyxml2::XMLError result = xmlDoc.LoadFile(truePath.c_str());
+    tinyxml2::XMLError result = xmlDoc.LoadFile(p_sDataFilePath.c_str());
 
     //-----------------------------------
     // FILE FOUND
@@ -106,13 +105,14 @@ Node *FactoryMethodsManager::createNode(const std::string &p_sDataFilePath)
 
     else if (result == tinyxml2::XML_ERROR_FILE_NOT_FOUND)
     {
-        std::cout << "DYDEBCUBE - ERROR:XML_FILE_NOT_FOUND" << std::endl;
+        std::cout << "FACMEDMNGR  - ERROR:XML_FILE_NOT_FOUND" << std::endl;
         return nullptr;
     }
 
     else
     {
-        std::cout << "DYDEBCUBE - ERROR:" << result << std::endl;
+        std::cout << "FACMEDMNGR  - ERROR:" << result << std::endl;
+        return nullptr;
     }
 }
 

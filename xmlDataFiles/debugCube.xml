@@ -5,7 +5,9 @@
         <Translation x='0' y='0' z='0' random='true'/>
     </Properties>
     
-    <GOC_BoundingSphere/>
+    <GOC_BoundingSphere>
+        <IsDynamicUpdate isDU='false' />
+    </GOC_BoundingSphere>
 
     <GOC_Effect>
         <Emittor>

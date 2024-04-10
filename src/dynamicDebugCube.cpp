@@ -1,5 +1,11 @@
 #include "dynamicDebugCube.h"
 
+//--------------------------------------------------------------------------------
+//
+// PUBLIC METHODS
+//
+//--------------------------------------------------------------------------------
+
 Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 {
     DynamicDebugCube *ddbc = new DynamicDebugCube();
@@ -123,13 +129,19 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
 
                     if (queryResultRandom == tinyxml2::XML_SUCCESS && random)
                     {
-                        // printf("DYDEBCUBE - TRANSLATION_RANDOM\n");
-                        int rangeLower = -128;
-                        int rangeUpper = 128;
+                        int rangeLowerX = -200;
+                        int rangeUpperX = 200;
+
+                        int rangeLowerY = -128;
+                        int rangeUpperY = 128;
+
+                        int rangeLowerZ = -200;
+                        int rangeUpperZ = 200;
+
                         translation = glm::vec3(
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper),
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper),
-                            RandomNumberGenerator::getRandomNumber(rangeLower, rangeUpper));
+                            RandomNumberGenerator::getRandomNumber(rangeLowerX, rangeUpperX),
+                            RandomNumberGenerator::getRandomNumber(rangeLowerY, rangeUpperY),
+                            RandomNumberGenerator::getRandomNumber(rangeLowerZ, rangeUpperZ));
                     }
                     else
                     {
@@ -194,24 +206,6 @@ Node *DynamicDebugCube::Factory(tinyxml2::XMLNode *p_xmlNode)
     return ddbc;
 }
 
-DynamicDebugCube::DynamicDebugCube() : DebugCube("DynamicDebugCube" + std::to_string(s_iNodeCount), glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(0.0f))
-{
-}
-
-// DynamicDebugCube::DynamicDebugCube(std::string p_newName, const glm::vec3 &p_vNewSc, const glm::vec3 &p_vNewRo, const glm::vec3 &p_vNewTr) : DebugCube(p_newName, p_vNewSc, p_vNewRo, p_vNewTr)
-// {
-//     this->m_fOrbitRadius = glm::length(this->getGlobalTranslate());
-//     this->yPos = p_vNewTr.y;
-//     this->m_vRotOffset = p_vNewRo;
-//     this->m_vTrlOffset = p_vNewTr;
-//     this->m_fOrbitDir = (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f;
-//     // printf("DYDEBCUBE - ORBITDIR:%2f\n", this->m_fOrbitDir);
-//     this->m_vRotDir = glm::vec3(
-//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f,
-//         (RandomNumberGenerator::getRandomNumber(0, 1) - 0.5f) * 2.0f);
-// }
-
 DynamicDebugCube::~DynamicDebugCube()
 {
 }
@@ -224,8 +218,35 @@ void DynamicDebugCube::update(float p_dt)
     this->setTranslate(this->m_vTrlOffset +
                        glm::vec3(
                            this->m_fOrbitRadius * glm::sin(this->m_fCounter * this->m_fOrbitSpeed),
-                           0.0f,
+                           this->yPos,
                            this->m_fOrbitRadius * glm::cos(this->m_fCounter * this->m_fOrbitSpeed)));
 
     this->setRotate(this->getRotate() + this->m_vRotDir * p_dt * this->m_fRotateSpeed);
+}
+
+void DynamicDebugCube::setScale(const glm::vec3 &p_vNewSc)
+{
+    Node::setScale(p_vNewSc);
+}
+
+void DynamicDebugCube::setRotate(const glm::vec3 &p_vNewRo)
+{
+    Node::setRotate(p_vNewRo);
+}
+
+void DynamicDebugCube::setTranslate(const glm::vec3 &p_vNewTr)
+{
+    Node::setTranslate(p_vNewTr);
+    this->yPos = p_vNewTr.y;
+    // std::cout << "DYDEBCUBE - YPOS:" << this->yPos << std::endl;
+}
+
+//--------------------------------------------------------------------------------
+//
+// PRIVATE METHODS
+//
+//--------------------------------------------------------------------------------
+
+DynamicDebugCube::DynamicDebugCube() : DebugCube("DynamicDebugCube" + std::to_string(s_iNodeCount), glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(0.0f))
+{
 }
