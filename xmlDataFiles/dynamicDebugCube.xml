@@ -45,8 +45,8 @@
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Smoke.png' />
                 <ParticleBaseLifespan time='5.0f'/>
-                <ParticleScaleStart x='2.0f' y='2.0f' z='2.0f' />
-                <ParticleScaleEnd x='10.0f' y='10.0f' z='10.0f' />  
+                <ParticleScaleStart x='4.0f' y='4.0f' z='4.0f' />
+                <ParticleScaleEnd x='16.0f' y='16.0f' z='16.0f' />  
             </Properties>
 
             <ShapeBox>
