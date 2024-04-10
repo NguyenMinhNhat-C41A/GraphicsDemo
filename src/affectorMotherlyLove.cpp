@@ -48,11 +48,8 @@ void AffectorMotherlyLove::affect(float p_dt)
                 activeParticle->translate(stepSize);
             }
         }
-
-        else
-        {
-        }
     }
+
     else
     {
         if (children.size() > 0)

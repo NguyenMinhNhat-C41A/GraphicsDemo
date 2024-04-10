@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../wolf/wolf.h"
 #include "plane.h"
+#include "../src/IOManager.h"
 
 class FirstPersonCamera
 {

@@ -4,6 +4,7 @@ SampleNodeWork::~SampleNodeWork()
 {
     FactoryMethodsManager::DestroyInstance();
     EffectManager::destroyInstance();
+    IOManager::destroyInstance();
     Scene::destroyInstance();
     delete this->m_bSkybox;
     this->m_bSkybox = nullptr;
@@ -19,6 +20,7 @@ void SampleNodeWork::init()
     //-----------------------------------
 
     Scene::createInstance(this->m_pApp);
+    IOManager::createInstance(this->m_pApp);
     EffectManager::createInstance(this->m_pApp);
     FactoryMethodsManager::CreateInstance();
 
@@ -72,26 +74,15 @@ void SampleNodeWork::init()
 void SampleNodeWork::update(float dt)
 {
     Scene::Instance()->update(dt);
-
+    IOManager::Instance()->update(dt);
     EffectManager::Instance()->updateEmittors(dt);
 
     Scene::Instance()->getCamera()->update(dt);
     this->counter += dt;
 
-    if (this->m_pApp->isKeyDown('Q'))
+    if (IOManager::Instance()->isButtonReleased('Q'))
     {
-        if (!this->isKeyDownQ)
-        {
-            this->isKeyDownQ = true;
-        }
-    }
-    else
-    {
-        if (this->isKeyDownQ)
-        {
-            this->isKeyDownQ = false;
-            this->isRenderWithBounds = !this->isRenderWithBounds;
-        }
+        this->isRenderWithBounds = !this->isRenderWithBounds;
     }
 }
 

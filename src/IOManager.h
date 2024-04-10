@@ -22,14 +22,15 @@ private:
     IOManager(wolf::App *p_pApp);
     virtual ~IOManager();
 
+    bool isKeyDown(int key);
+
     static IOManager *s_pIOManagerInstance;
 
+    static const int NUM_KEYS = GLFW_KEY_LAST - GLFW_KEY_SPACE;
     wolf::App *m_pApp = nullptr;
 
-    bool m_bKeysDown[256];
-    bool m_bKeysDownLast[256];
-
-    bool isUpdateNeeded = false;
+    bool m_bKeysDown[NUM_KEYS];
+    bool m_bKeysDownLast[NUM_KEYS];
 
     float m_fSpeed = 5.0f;
 

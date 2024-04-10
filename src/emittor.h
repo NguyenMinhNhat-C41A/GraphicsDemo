@@ -118,6 +118,7 @@ public:
     // PUBLIC METHODS
     //
     //--------------------------------------------------------------------------------
+
     static Emittor *Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLNode);
     void update(float p_dt);
     void render(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
