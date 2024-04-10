@@ -56,6 +56,5 @@ private:
     bool m_bIsWheelchairMode = false;
     bool m_bIsFDown = false;
 
-    glm::vec2 lastMousePos = glm::vec2(0.0f, 0.0f);
     wolf::App *m_pApp = nullptr;
 };

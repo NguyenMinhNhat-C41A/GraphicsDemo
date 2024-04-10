@@ -2,7 +2,6 @@
 
 FirstPersonCamera::FirstPersonCamera(wolf::App *pApp) : m_pApp(pApp)
 {
-    this->lastMousePos = this->m_pApp->getMousePos();
     this->camSpeed = this->camSpeeds.at(this->camSpeedIndex);
     this->camFlySpeed = this->camSpeeds.at(this->camSpeedIndex);
 }
@@ -23,8 +22,6 @@ glm::mat4 FirstPersonCamera::getProjMatrix()
 
 void FirstPersonCamera::update(const float dt)
 {
-
-    glm::vec2 mousePos = m_pApp->getMousePos();
 
     if (IOManager::Instance()->isButtonPressed('W'))
     {
@@ -109,12 +106,7 @@ void FirstPersonCamera::update(const float dt)
         this->yaw += this->camTankRotSpeed * dt;
     }
 
-    float xOffset = mousePos.x - this->lastMousePos.x;
-    float yOffset = mousePos.y - this->lastMousePos.y;
-    this->lastMousePos.x = mousePos.x;
-    this->lastMousePos.y = mousePos.y;
-
-    this->yaw += xOffset * this->mouseSensitivity;
+    this->yaw += IOManager::Instance()->getMouseOffset().first * IOManager::Instance()->getMouseSensitivity();
 
     if (this->yaw < -180.0f)
     {
@@ -132,7 +124,7 @@ void FirstPersonCamera::update(const float dt)
     }
     else
     {
-        this->pitch -= yOffset * this->mouseSensitivity;
+        this->pitch -= IOManager::Instance()->getMouseOffset().second * IOManager::Instance()->getMouseSensitivity();
 
         if (this->pitch > MAX_PITCH)
         {

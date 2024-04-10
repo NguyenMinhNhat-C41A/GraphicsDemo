@@ -30,8 +30,12 @@ void IOManager::update(float p_fDelta)
 {
     double xpos, ypos;
     glfwGetCursorPos(this->m_pApp->getWindow(), &xpos, &ypos);
-    this->m_vMouseOffset = glm::vec2(xpos - this->m_vLastMousePos.x, ypos - this->m_vLastMousePos.y);
-    this->m_vLastMousePos = glm::vec2(xpos, ypos);
+
+    this->m_LastMousePos = this->m_MousePos;
+    this->m_MousePos = {xpos, ypos};
+    this->m_MouseOffset = {
+        this->m_MousePos.first - this->m_LastMousePos.first,
+        this->m_MousePos.second - this->m_LastMousePos.second};
 
     for (int i = 0; i < NUM_KEYS; ++i)
     {
@@ -42,9 +46,19 @@ void IOManager::update(float p_fDelta)
     }
 }
 
-glm::vec2 IOManager::getMouseOffset()
+std::pair<float, float> IOManager::getMousePosition()
 {
-    return this->m_vMouseOffset;
+    return this->m_MousePos;
+}
+
+std::pair<float, float> IOManager::getLastMousePosition()
+{
+    return this->m_LastMousePos;
+}
+
+std::pair<float, float> IOManager::getMouseOffset()
+{
+    return this->m_MouseOffset;
 }
 
 float IOManager::getMouseSensitivity()
@@ -86,9 +100,4 @@ IOManager::IOManager(wolf::App *p_pApp)
 IOManager::~IOManager()
 {
     this->m_pApp = nullptr;
-}
-
-bool IOManager::isKeyDown(int key)
-{
-    return glfwGetKey(this->m_pApp->getWindow(), key) == GLFW_PRESS;
 }
