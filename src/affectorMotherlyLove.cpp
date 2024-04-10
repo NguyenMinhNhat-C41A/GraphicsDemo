@@ -32,27 +32,36 @@ Affector *AffectorMotherlyLove::Factory(Emittor *p_pEmittor, tinyxml2::XMLNode *
 void AffectorMotherlyLove::affect(float p_dt)
 {
 
-    if (this->m_pChildMostDear != nullptr)
+    std::vector<Node *> children = this->m_pMother->getImmediateChildren();
+    if (this->m_bCount > 0)
     {
-        for (auto activeParticle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); activeParticle != nullptr; activeParticle = activeParticle->getNextParticle())
+        if (children.size() > 0)
         {
-            glm::vec3 distance = this->m_pChildMostDear->getGlobalTranslate() - activeParticle->getTransform()->getTranslate();
-            float remainingLife = activeParticle->getLifespan() - activeParticle->getAge();
+            for (auto activeParticle = this->m_pEmittor->getActiveParticles()->getFirstParticle(); activeParticle != nullptr; activeParticle = activeParticle->getNextParticle())
+            {
+                glm::vec3 distance = this->m_pChildMostDear->getGlobalTranslate() - activeParticle->getTransform()->getTranslate();
+                float remainingLife = activeParticle->getLifespan() - activeParticle->getAge();
 
-            float updatesCount = remainingLife / p_dt;
-            glm::vec3 stepSize = distance / updatesCount;
+                float updatesCount = remainingLife / p_dt;
+                glm::vec3 stepSize = distance / updatesCount;
 
-            activeParticle->translate(stepSize);
+                activeParticle->translate(stepSize);
+            }
+        }
+
+        else
+        {
         }
     }
     else
     {
-        std::vector<Node *> children = this->m_pMother->getImmediateChildren();
         if (children.size() > 0)
         {
             this->m_pChildMostDear = children.at(0);
         }
     }
+
+    this->m_bCount = children.size();
 }
 
 //--------------------------------------------------------------------------------
@@ -67,7 +76,8 @@ AffectorMotherlyLove::AffectorMotherlyLove(Emittor *p_pEmittor) : Affector(p_pEm
     this->m_pMother = p_pEmittor->getHostComponent()->getComponentNode();
 
     std::vector<Node *> children = this->m_pMother->getImmediateChildren();
-    if (children.size() > 0)
+    this->m_bCount = children.size();
+    if (this->m_bCount > 0)
     {
         this->m_pChildMostDear = children.at(0);
     }

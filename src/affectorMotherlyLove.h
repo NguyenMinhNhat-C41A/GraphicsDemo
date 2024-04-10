@@ -37,4 +37,6 @@ private:
 
     Node *m_pMother = nullptr;
     Node *m_pChildMostDear = nullptr;
+
+    bool m_bCount = false;
 };
