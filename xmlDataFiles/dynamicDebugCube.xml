@@ -1,4 +1,4 @@
-<DynamicDebugCube>
+<DebugCube>
    
     <Properties>
         <Scale x='5' y='5' z='5' />
@@ -6,6 +6,7 @@
         <Translation x='50' y='0' z='50' random='true' />
     </Properties>
     
+    <GOC_Orbitor />
 
     <GOC_Effect>
         <Emittor>
@@ -72,4 +73,4 @@
    
     <GOC_BoundingSphere />
     
-</DynamicDebugCube>
+</DebugCube>

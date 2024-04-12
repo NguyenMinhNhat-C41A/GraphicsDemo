@@ -10,9 +10,10 @@
 #include "rng.h"
 
 #include "debugCube.h"
-#include "dynamicDebugCube.h"
 #include "boundingSphere.h"
 #include "componentEffect.h"
+#include "componentOrbitor.h"
+
 #include "skybox.h"
 class SampleNodeWork : public Sample
 {

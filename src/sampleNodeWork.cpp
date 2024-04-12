@@ -35,10 +35,10 @@ void SampleNodeWork::init()
     // FACTORYMETHODSMANAGER SINGLETON SETUP
     //-----------------------------------
     FactoryMethodsManager::Instance()->registerNodeFactoryMethod("DebugCube", DebugCube::Factory);
-    FactoryMethodsManager::Instance()->registerNodeFactoryMethod("DynamicDebugCube", DynamicDebugCube::Factory);
 
     FactoryMethodsManager::Instance()->registerComponentFactoryMethod("GOC_BoundingSphere", BoundingSphere::Factory);
     FactoryMethodsManager::Instance()->registerComponentFactoryMethod("GOC_Effect", ComponentEffect::Factory);
+    FactoryMethodsManager::Instance()->registerComponentFactoryMethod("GOC_Orbitor", ComponentOrbitor::Factory);
 
     glm::vec2 hBounds = glm::vec2(-256, 256);
     glm::vec2 vBounds = glm::vec2(-128, 128);
@@ -46,17 +46,17 @@ void SampleNodeWork::init()
     for (int i = 0; i < RandomNumberGenerator::getRandomNumber(64, 80); i++)
     {
 
-        Node *rootCube01 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCube.xml");
-        Scene::Instance()->addNode(rootCube01);
-        Node *childCube01 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCubeChild.xml");
-        rootCube01->addChild(childCube01);
+        Node *rootCube = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCube.xml");
+        Scene::Instance()->addNode(rootCube);
+        Node *childCube = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/debugCubeChild.xml");
+        rootCube->addChild(childCube);
     }
 
-    Node *ddbc = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
-    Scene::Instance()->addDynamicNode(ddbc);
+    Node *dynamicCube01 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
+    Scene::Instance()->addDynamicNode(dynamicCube01);
 
-    Node *ddbc2 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
-    Scene::Instance()->addDynamicNode(ddbc2);
+    Node *dynamicCube02 = FactoryMethodsManager::Instance()->createNode("xmlDataFiles/dynamicDebugCube.xml");
+    Scene::Instance()->addDynamicNode(dynamicCube02);
 
     for (auto node : Scene::Instance()->getNodes())
     {

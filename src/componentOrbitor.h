@@ -1,10 +1,9 @@
 #pragma once
-#include "../thirdparty/tinyxml2/tinyxml2.h"
-#include "rng.h"
-#include "factoryMethodsManager.h"
-#include "debugCube.h"
 
-class DynamicDebugCube : public DebugCube
+#include "../thirdparty/tinyxml2/tinyxml2.h"
+#include "componentBase.h"
+
+class ComponentOrbitor : public ComponentBase
 {
 public:
     //--------------------------------------------------------------------------------
@@ -13,14 +12,13 @@ public:
     //
     //--------------------------------------------------------------------------------
 
-    static Node *Factory(tinyxml2::XMLNode *p_xmlNode);
-    ~DynamicDebugCube();
+    static ComponentBase *Factory(Node *p_pCompNode, tinyxml2::XMLNode *p_pXMLNode);
+    ~ComponentOrbitor();
 
-    virtual void update(float p_dt) override;
+    virtual std::string ComponentID() override { return "GOC_Orbitor"; };
 
-    virtual void setScale(const glm::vec3 &p_vNewSc) override;
-    virtual void setRotate(const glm::vec3 &p_vNewRo) override;
-    virtual void setTranslate(const glm::vec3 &p_vNewTr) override;
+    virtual void init() override;
+    virtual void update(float dt) override;
 
 private:
     //--------------------------------------------------------------------------------
@@ -29,7 +27,7 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    DynamicDebugCube();
+    ComponentOrbitor(Node *p_pCompNode);
 
     //--------------------------------------------------------------------------------
     //
@@ -37,14 +35,17 @@ private:
     //
     //--------------------------------------------------------------------------------
 
-    float m_fOrbitRadius = 0.0f;
-    float m_fCounter = 0.0f;
-    float yPos = 0.0f;
-    float m_fOrbitDir = 0.0f;
-    glm::vec3 m_vRotDir = glm::vec3(1.0f);
-    glm::vec3 m_vTrlOffset = glm::vec3(0.0f);
-    glm::vec3 m_vRotOffset = glm::vec3(0.0f);
-
     float m_fOrbitSpeed = 0.25f;
     float m_fRotateSpeed = 128.0f;
+
+    float m_fOrbitRadius = 0.0f;
+    float m_fOrbitDir = 1.0f;
+    float yPos = 0.0f;
+
+    float m_fCounter = 0.0f;
+
+    glm::vec3 m_vRotOffset = glm::vec3(0.0f);
+    glm::vec3 m_vRotDir = glm::vec3(1.0f);
+
+    glm::vec3 m_vTrlOffset = glm::vec3(0.0f);
 };
