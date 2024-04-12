@@ -16,7 +16,7 @@
                 <ParticleTexture texture='data/textures/Fire.png'/>
                 <ParticleBaseLifespan time='4.0f'/>
                 <ParticleScaleStart x='5.0f' y='5.0f' z='5.0f' />
-                <ParticleScaleEnd x='1.0f' y='1.0f' z='1.0f' />  
+                <ParticleScaleEnd x='0.5f' y='0.5f' z='0.5f' />  
             </Properties>
 
             <ShapeBox>
