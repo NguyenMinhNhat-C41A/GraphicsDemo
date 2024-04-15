@@ -293,6 +293,23 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                 std::string emiSpecsTag = pXMLEmiSpecsNode->Value();
 
                 //-----------------------------------
+                // BLEND MODE
+                //-----------------------------------
+
+                if (emiSpecsTag.compare("BlendMode") == 0)
+                {
+                    const char *blendMode = "";
+
+                    if (pXMLEmiSpecsNode->ToElement()->QueryStringAttribute("mode", &blendMode) != tinyxml2::XML_SUCCESS)
+                    {
+                        std::cerr << "EMITTOR - BLEND_MODE_NOT_FOUND" << std::endl;
+                    }
+
+                    std::cout << "EMITTOR - BLEND_MODE:" << blendMode << std::endl;
+                    emittor->m_sBlendMode = blendMode;
+                }
+
+                //-----------------------------------
                 // OFFSET
                 //-----------------------------------
 
@@ -811,6 +828,8 @@ Emittor::Emittor(ComponentEffect *compFX)
     this->m_pCompFX = compFX;
 
     this->m_fTimer = 0.0f;
+
+    this->m_sBlendMode = "disabled";
 
     this->m_vOffset = glm::vec3(1.0f);
     this->m_vDefaultColour = glm::vec4(0.0f, 0.0f, 0.0f, 255.0f);

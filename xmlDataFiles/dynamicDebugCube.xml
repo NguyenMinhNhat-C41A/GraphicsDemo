@@ -11,6 +11,7 @@
     <GOC_Effect>
         <Emittor>
             <Properties>
+                <BlendMode mode='additive' />
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Fire.png'/>
@@ -42,6 +43,7 @@
     <GOC_Effect>
         <Emittor>
             <Properties>
+                <BlendMode mode='interpolative' />
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Smoke.png' />

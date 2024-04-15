@@ -182,6 +182,8 @@ private:
 
     float m_fTimer = 0.0f;
 
+    std::string m_sBlendMode = "disabled";
+
     float m_fEmittorDuration = -1.0f;
     float m_fParticleBaseLifespan = 1.0f;
     bool m_bAreParticlesTransparent = false;

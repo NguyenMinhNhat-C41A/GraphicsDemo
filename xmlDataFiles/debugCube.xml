@@ -12,6 +12,7 @@
     <GOC_Effect>
         <Emittor>
             <Properties>
+            <BlendMode mode='disabled' />
                 <Offset x='0.0f' y='0.0f' z='0.0f' />
                 <Duration time = '-1.0f' />
                 <ParticleTexture texture='data/textures/Mosaic.png'/>
