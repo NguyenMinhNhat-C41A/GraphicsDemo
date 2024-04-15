@@ -12,5 +12,5 @@ void main()
 {
     gl_Position = view * world * a_position;
     v_uv1 = a_uv1;
-    v_color = a_color / 255;
+    v_color = a_color / 256;
  }
