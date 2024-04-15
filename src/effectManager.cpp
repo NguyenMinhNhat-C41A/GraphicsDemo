@@ -59,6 +59,13 @@ void EffectManager::updateEmittors(float p_dt)
     }
 }
 
+void EffectManager::renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
+{
+    this->renderOpaqueEmittors(p_mProj, p_mView);
+
+    this->renderTransparentEmittors(p_mProj, p_mView);
+}
+
 void EffectManager::renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
     glEnable(GL_BLEND);
@@ -96,6 +103,7 @@ void EffectManager::renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::ma
 
 void EffectManager::renderTransparentEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
+    glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     for (auto emittor : this->m_vpTransparentEmittors)
     {
@@ -126,6 +134,8 @@ void EffectManager::renderTransparentEmittors(const glm::mat4 &p_mProj, const gl
         emittor->render(p_mProj, p_mView);
     }
     glDisable(GL_BLEND);
+
+    glDepthMask(GL_TRUE);
 }
 
 //--------------------------------------------------------------------------------

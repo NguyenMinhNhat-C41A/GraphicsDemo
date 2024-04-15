@@ -102,7 +102,5 @@ void SampleNodeWork::render(int width, int height)
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
 
-    EffectManager::Instance()->renderOpaqueEmittors(projMatrix, viewMatrix);
-
-    EffectManager::Instance()->renderTransparentEmittors(projMatrix, viewMatrix);
+    EffectManager::Instance()->renderEmittors(projMatrix, viewMatrix);
 }
