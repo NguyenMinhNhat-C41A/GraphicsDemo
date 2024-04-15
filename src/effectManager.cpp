@@ -61,18 +61,71 @@ void EffectManager::updateEmittors(float p_dt)
 
 void EffectManager::renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
+    glEnable(GL_BLEND);
     for (auto emittor : this->m_vpOpaqueEmittors)
     {
+
+        std::string blendMode = emittor->getEmittorBlendMode();
+
+        if (blendMode.compare("additive") == 0)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE);
+        }
+
+        else if (blendMode.compare("interpolative") == 0)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+
+        else if (blendMode.compare("disabled") == 0)
+        {
+            glDisable(GL_BLEND);
+        }
+
+        else
+        {
+            glDisable(GL_BLEND);
+        }
+
         emittor->render(p_mProj, p_mView);
     }
+    glDisable(GL_BLEND);
 }
 
 void EffectManager::renderTransparentEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {
+    glEnable(GL_BLEND);
     for (auto emittor : this->m_vpTransparentEmittors)
     {
+        std::string blendMode = emittor->getEmittorBlendMode();
+
+        if (blendMode.compare("additive") == 0)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE);
+        }
+
+        else if (blendMode.compare("interpolative") == 0)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+
+        else if (blendMode.compare("disabled") == 0)
+        {
+            glDisable(GL_BLEND);
+        }
+
+        else
+        {
+            glDisable(GL_BLEND);
+        }
+
         emittor->render(p_mProj, p_mView);
     }
+    glDisable(GL_BLEND);
 }
 
 //--------------------------------------------------------------------------------

@@ -102,15 +102,7 @@ void SampleNodeWork::render(int width, int height)
         Scene::Instance()->render(projMatrix, viewMatrix);
     }
 
-    glEnable(GL_BLEND);
-
     EffectManager::Instance()->renderOpaqueEmittors(projMatrix, viewMatrix);
 
-    glDepthMask(GL_FALSE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     EffectManager::Instance()->renderTransparentEmittors(projMatrix, viewMatrix);
-
-    glDepthMask(GL_TRUE);
-    glDisable(GL_BLEND);
 }

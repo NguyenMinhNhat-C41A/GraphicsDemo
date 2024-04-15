@@ -138,6 +138,7 @@ public:
 
     Shape *getEmittorShape();
 
+    std::string getEmittorBlendMode();
     float getEmittorDuration();
     float getParticleBaseLifespan();
 

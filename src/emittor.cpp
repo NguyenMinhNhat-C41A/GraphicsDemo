@@ -305,7 +305,6 @@ Emittor *Emittor::Factory(ComponentEffect *p_pCompFX, tinyxml2::XMLNode *p_pXMLN
                         std::cerr << "EMITTOR - BLEND_MODE_NOT_FOUND" << std::endl;
                     }
 
-                    std::cout << "EMITTOR - BLEND_MODE:" << blendMode << std::endl;
                     emittor->m_sBlendMode = blendMode;
                 }
 
@@ -760,6 +759,11 @@ bool Emittor::areParticlesTransparent()
 Shape *Emittor::getEmittorShape()
 {
     return this->m_pEmittorShape;
+}
+
+std::string Emittor::getEmittorBlendMode()
+{
+    return this->m_sBlendMode;
 }
 
 float Emittor::getEmittorDuration()
