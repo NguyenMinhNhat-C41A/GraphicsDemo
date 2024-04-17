@@ -59,12 +59,12 @@ void EffectManager::updateEmittors(float p_dt)
     }
 }
 
-void EffectManager::renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
-{
-    this->renderOpaqueEmittors(p_mProj, p_mView);
-
-    this->renderTransparentEmittors(p_mProj, p_mView);
-}
+// void EffectManager::renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
+// {
+//     this->renderOpaqueEmittors(p_mProj, p_mView);
+//
+//     this->renderTransparentEmittors(p_mProj, p_mView);
+// }
 
 void EffectManager::renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView)
 {

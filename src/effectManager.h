@@ -16,16 +16,15 @@ public:
     void removeEmittor(Emittor *p_pEmittor);
 
     void updateEmittors(float p_dt);
-    void renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
+    //void renderEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
+    void renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
+    void renderTransparentEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
 
 private:
     EffectManager(wolf::App *p_pApp);
     ~EffectManager();
 
-    void renderOpaqueEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
-    void renderTransparentEmittors(const glm::mat4 &p_mProj, const glm::mat4 &p_mView);
-
-    static EffectManager *s_pEffectManager;
+        static EffectManager *s_pEffectManager;
 
     std::vector<Emittor *> m_vpOpaqueEmittors;
     std::vector<Emittor *> m_vpTransparentEmittors;

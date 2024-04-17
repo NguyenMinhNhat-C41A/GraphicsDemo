@@ -36,7 +36,7 @@ void AffectorFade::affect(float p_dt)
     {
         glm::vec4 colour = activeParticle->getColour();
 
-        colour.a = 255.0f * (1.0f - static_cast<float>(activeParticle->getAge() / activeParticle->getLifespan()));
+        colour.a = 256.0f * (1.0f - static_cast<float>(activeParticle->getAge() / activeParticle->getLifespan()));
 
         activeParticle->setColour(colour);
     }
